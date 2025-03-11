@@ -1,0 +1,25 @@
+{
+    "name": "Skuld/OrderReturn",
+    "description": "A free Magento 2 module for handling order returns by customers.",
+    "type": "magento2-module",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Edward Delgado",
+            "email": ""
+        }
+    ],
+    "require": {
+        "magento/framework": "^103",
+        "magento/module-sales": "^103"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Skuld\\OrderExport\\": ""
+        }
+    }
+}
