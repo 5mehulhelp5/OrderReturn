@@ -24,6 +24,14 @@
                 comment="Request Status"
         />
         <column xsi:type="smallint"
+                name="is_active"
+                unsigned="true"
+                nullable="false"
+                identity="false"
+                default="1"
+                comment="Is Active"
+        />
+        <column xsi:type="smallint"
                 name="sales_organization"
                 unsigned="true"
                 nullable="false"
@@ -45,12 +53,24 @@
                 default="0"
                 comment="Customer ID"
         />
+        <column xsi:type="varchar"
+                name="customer_custom_email"
+                nullable="true"
+                length="255"
+                comment="Customer Custom Email"
+        />
         <column xsi:type="int"
                 name="order_id"
                 unsigned="true"
                 nullable="false"
                 default="0"
                 comment="Order ID"
+        />
+        <column xsi:type="varchar"
+                name="order_increment_id"
+                nullable="true"
+                length="50"
+                comment="Order Increment Id"
         />
         <column xsi:type="smallint"
                 name="return_request_type_id"
@@ -71,7 +91,8 @@
                 on_update="true"
                 nullable="false"
                 default="CURRENT_TIMESTAMP"
-                comment="Updated At"/>
+                comment="Updated At"
+        />
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
@@ -91,11 +112,177 @@
         <index referenceId="RMA_REQUEST_STATUS" indexType="btree">
             <column name="status"/>
         </index>
+        <index referenceId="RMA_REQUEST_IS_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+        <index referenceId="RMA_REQUEST_ORDER_ID" indexType="btree">
+            <column name="order_id"/>
+        </index>
+        <index referenceId="RMA_REQUEST_ORDER_INCREMENT_ID" indexType="btree">
+            <column name="order_increment_id"/>
+        </index>
+        <index referenceId="RMA_REQUEST_SOLD_TO_PARTY" indexType="btree">
+            <column name="sold_to_party"/>
+        </index>
         <index referenceId="RMA_REQUEST_CREATED_AT" indexType="btree">
             <column name="created_at"/>
         </index>
         <index referenceId="RMA_REQUEST_UPDATED_AT" indexType="btree">
             <column name="updated_at"/>
         </index>
+    </table>
+    <table name="rma_return_request_type_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
+        <column xsi:type="int"
+                name="id"
+                unsigned="false"
+                nullable="false"
+                identity="true"
+                comment="ID"
+        />
+        <column xsi:type="varchar"
+                name="code"
+                nullable="false"
+                length="50"
+                default="0"
+                comment="Code"
+        />
+        <column xsi:type="varchar"
+                name="description"
+                nullable="false"
+                default=""
+                comment="Description"
+        />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RMA_RETURN_REQUEST_TYPE_CODES_CODE_DESCRIPTION">
+            <column name="code"/>
+            <column name="description"/>
+        </constraint>
+    </table>
+    <table name="rma_request_items" resource="default" engine="innodb" comment="Return Merchandise Authorization Items">
+        <column xsi:type="int"
+                name="id"
+                unsigned="false"
+                nullable="false"
+                identity="true"
+                comment="ID"
+        />
+        <column xsi:type="int"
+                name="rma_request_id"
+                unsigned="false"
+                nullable="false"
+                comment="RMA Request ID"
+        />
+        <column xsi:type="int"
+                name="return_request_item"
+                unsigned="true"
+                nullable="false"
+                comment="Product Order Item Id"
+        />
+        <column xsi:type="varchar"
+                name="product_name"
+                nullable="true"
+                length="255"
+                comment="Product Name"/
+        >
+        <column xsi:type="decimal"
+                name="qty_returned"
+                scale="4"
+                precision="12"
+                unsigned="false" nullable="true"
+                comment="Qty of returned items"
+        />
+        <column xsi:type="varchar"
+                name="material"
+                nullable="true"
+                length="255"
+                comment="Sku"
+        />
+        <column xsi:type="varchar"
+                name="base_unit"
+                nullable="true"
+                length="50"
+                comment="Base unit"
+        />
+        <column xsi:type="decimal"
+                name="qty_requested"
+                scale="4"
+                precision="12"
+                unsigned="false"
+                nullable="false"
+                default="0"
+                comment="Qty of requested for RMA items"
+        />
+        <column xsi:type="decimal"
+                name="qty_authorized"
+                scale="4"
+                precision="12"
+                unsigned="false"
+                nullable="true"
+                comment="Qty of authorized items"
+        />
+        <column xsi:type="decimal"
+                name="qty_approved"
+                scale="4"
+                precision="12"
+                unsigned="false"
+                nullable="true"
+                comment="Qty of approved items"
+        />
+        <column xsi:type="varchar"
+                name="product_admin_name"
+                nullable="true"
+                length="255"
+                comment="Product Name For Backend"
+        />
+        <column xsi:type="varchar"
+                name="product_admin_sku"
+                nullable="true"
+                length="255"
+                comment="Product Sku For Backend"
+        />
+        <column xsi:type="smallint"
+                name="reason_for_return_id"
+                unsigned="true"
+                nullable="false"
+                default="0"
+                comment="Reason For Return ID"
+        />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="RMA_REQUEST_ITEMS_RMA_REQUEST_ID_RMA_REQUEST_ID"
+                    table="rma_request_items" column="rma_request_id" referenceTable="rma_request"
+                    referenceColumn="id" onDelete="CASCADE"/>
+    </table>
+    <table name="rma_reason_for_return_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
+        <column xsi:type="int"
+                name="id"
+                unsigned="false"
+                nullable="false"
+                identity="true"
+                comment="ID"
+        />
+        <column xsi:type="varchar"
+                name="code"
+                nullable="false"
+                length="50"
+                default="0"
+                comment="Code"
+        />
+        <column xsi:type="varchar"
+                name="description"
+                nullable="false"
+                default=""
+                comment="Description"
+        />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RMA_REASON_FOR_RETURN_CODES_CODE_DESCRIPTION">
+            <column name="code"/>
+            <column name="description"/>
+        </constraint>
     </table>
 </schema>
