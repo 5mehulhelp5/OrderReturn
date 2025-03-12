@@ -1,0 +1,78 @@
+{
+    "rma_request": {
+        "column": {
+            "id": true,
+            "return_request_id": true,
+            "status": true,
+            "is_active": true,
+            "sales_organization": true,
+            "distribution_channel": true,
+            "sold_to_party": true,
+            "customer_custom_email": true,
+            "order_id": true,
+            "order_increment_id": true,
+            "return_request_type_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "RMA_REQUEST_RETURN_REQUEST_ID": true,
+            "RMA_REQUEST_STATUS": true,
+            "RMA_REQUEST_IS_ACTIVE": true,
+            "RMA_REQUEST_ORDER_ID": true,
+            "RMA_REQUEST_ORDER_INCREMENT_ID": true,
+            "RMA_REQUEST_SOLD_TO_PARTY": true,
+            "RMA_REQUEST_CREATED_AT": true,
+            "RMA_REQUEST_UPDATED_AT": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "RMA_REQUEST_ORDER_ID_SALES_ORDER_ENTITY_ID": true,
+            "RMA_REQUEST_SOLD_TO_PARTY_CUSTOMER_ENTITY_ENTITY_ID": true,
+            "RMA_REQUEST_RETURN_REQUEST_ID_DISTRIBUTION_CHANNEL": true
+        }
+    },
+    "rma_return_request_type_codes": {
+        "column": {
+            "id": true,
+            "code": true,
+            "description": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "RMA_RETURN_REQUEST_TYPE_CODES_CODE_DESCRIPTION": true
+        }
+    },
+    "rma_request_items": {
+        "column": {
+            "id": true,
+            "rma_request_id": true,
+            "return_request_item": true,
+            "product_name": true,
+            "qty_returned": true,
+            "material": true,
+            "base_unit": true,
+            "qty_requested": true,
+            "qty_authorized": true,
+            "qty_approved": true,
+            "product_admin_name": true,
+            "product_admin_sku": true,
+            "reason_for_return_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "RMA_REQUEST_ITEMS_RMA_REQUEST_ID_RMA_REQUEST_ID": true
+        }
+    },
+    "rma_reason_for_return_codes": {
+        "column": {
+            "id": true,
+            "code": true,
+            "description": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "RMA_REASON_FOR_RETURN_CODES_CODE_DESCRIPTION": true
+        }
+    }
+}
