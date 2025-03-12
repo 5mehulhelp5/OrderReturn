@@ -184,8 +184,8 @@
                 name="product_name"
                 nullable="true"
                 length="255"
-                comment="Product Name"/
-        >
+                comment="Product Name"
+        />
         <column xsi:type="decimal"
                 name="qty_returned"
                 scale="4"
