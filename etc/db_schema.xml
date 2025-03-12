@@ -16,7 +16,16 @@
         />
         <column xsi:type="text"
                 name="status"
-                comment="Return Request Id"
+                comment="Request Status"
         />
+
+
+        <constraint xsi:type="unique" referenceId="RMA_REQUEST_RETURN_REQUEST_ID_STORE_ID">
+            <column name="return_request_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="RMA_REQUEST_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
     </table>
 </schema>
