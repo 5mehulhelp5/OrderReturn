@@ -10,22 +10,92 @@
                 identity="true"
                 comment="ID"
         />
-        <column xsi:type="text"
+        <column xsi:type="varchar"
                 name="return_request_id"
-                comment="Return Request Id"
+                nullable="false"
+                length="50"
+                default="0"
+                comment="Return Request ID"
         />
-        <column xsi:type="text"
+        <column xsi:type="varchar"
                 name="status"
+                nullable="false"
+                default="created"
                 comment="Request Status"
         />
-
-
-        <constraint xsi:type="unique" referenceId="RMA_REQUEST_RETURN_REQUEST_ID_STORE_ID">
-            <column name="return_request_id"/>
-            <column name="store_id"/>
+        <column xsi:type="smallint"
+                name="sales_organization"
+                unsigned="true"
+                nullable="false"
+                default="0"
+                comment="Sales Organization"
+        />
+        <column xsi:type="smallint"
+                name="distribution_channel"
+                unsigned="true"
+                nullable="false"
+                default="0"
+                comment="Distribution Channel"
+        />
+        <column xsi:type="int"
+                name="sold_to_party"
+                unsigned="true"
+                nullable="false"
+                identity="false"
+                default="0"
+                comment="Customer ID"
+        />
+        <column xsi:type="int"
+                name="order_id"
+                unsigned="true"
+                nullable="false"
+                default="0"
+                comment="Order ID"
+        />
+        <column xsi:type="smallint"
+                name="return_request_type_id"
+                unsigned="true"
+                nullable="false"
+                default="0"
+                comment="Return Request Type ID"
+        />
+        <column xsi:type="timestamp"
+                name="created_at"
+                on_update="false"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Created At"
+        />
+        <column xsi:type="timestamp"
+                name="updated_at"
+                on_update="true"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
         </constraint>
+        <constraint xsi:type="foreign" referenceId="RMA_REQUEST_ORDER_ID_SALES_ORDER_ENTITY_ID" table="rma_request"
+                    column="order_id" referenceTable="sales_order" referenceColumn="entity_id" onDelete="CASCADE"
+        />
+        <constraint xsi:type="foreign" referenceId="RMA_REQUEST_SOLD_TO_PARTY_CUSTOMER_ENTITY_ENTITY_ID" table="rma_request"
+                    column="sold_to_party" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"
+        />
+        <constraint xsi:type="unique" referenceId="RMA_REQUEST_RETURN_REQUEST_ID_DISTRIBUTION_CHANNEL">
+            <column name="return_request_id"/>
+            <column name="distribution_channel"/>
+        </constraint>
+        <index referenceId="RMA_REQUEST_RETURN_REQUEST_ID" indexType="btree">
+            <column name="return_request_id"/>
+        </index>
         <index referenceId="RMA_REQUEST_STATUS" indexType="btree">
             <column name="status"/>
+        </index>
+        <index referenceId="RMA_REQUEST_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+        <index referenceId="RMA_REQUEST_UPDATED_AT" indexType="btree">
+            <column name="updated_at"/>
         </index>
     </table>
 </schema>
