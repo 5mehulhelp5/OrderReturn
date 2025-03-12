@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="rma_request" resource="default" engine="innodb" comment="Return Merchandise Authorization">
+        <column xsi:type="int"
+                name="id"
+                unsigned="false"
+                nullable="false"
+                identity="true"
+                comment="ID"
+        />
+        <column xsi:type="text"
+                name="return_request_id"
+                comment="Return Request Id"
+        />
+        <column xsi:type="text"
+                name="status"
+                comment="Return Request Id"
+        />
+    </table>
+</schema>
