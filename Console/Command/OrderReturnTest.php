@@ -2,7 +2,8 @@
 
 namespace Skuld\OrderReturn\Console\Command;
 
-class OrderReturnTest
+use Symfony\Component\Console\Command\Command;
+class OrderReturnTest extends Command
 {
 
 }
