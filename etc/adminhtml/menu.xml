@@ -23,7 +23,7 @@
              module="Skuld_OrderReturn"
              sortOrder="20"
              parent="Skuld_OrderReturn::rma_manager"
-             action="skuld_orderreturn/return/index"
+             action="admin/system_config/edit/section/rma_section"
              resource="Skuld_OrderReturn::configurations"/>
 
         <add id="Skuld_OrderReturn::reports"

@@ -30,37 +30,37 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
         $this->rmaReasonForReturnCodesFactory = $rmaReasonForReturnCodesFactory;
     }
 
-    public function save(RmaReasonForReturnCodesInterface $orderReturnDetails): RmaReasonForReturnCodesInterface
+    public function save(RmaReasonForReturnCodesInterface $reasonForReturnCode): RmaReasonForReturnCodesInterface
     {
-        if (!($orderReturnDetails instanceof AbstractModel)) {
-            throw new CouldNotSaveException(__('The implementation of OrderExportDetails has changed'));
+        if (!($reasonForReturnCode instanceof AbstractModel)) {
+            throw new CouldNotSaveException(__('The implementation of RmaReasonForReturnCodes has changed'));
         }
         try {
-            $this->orderReturnCodesResource->save($orderReturnDetails);
+            $this->orderReturnCodesResource->save($reasonForReturnCode);
         } catch (\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         }
-        return $orderReturnDetails;
+        return $reasonForReturnCode;
     }
 
-    public function getById(int $detailsId): RmaReasonForReturnCodesInterface
+    public function getById(int $reasonForReturnCodeId): RmaReasonForReturnCodesInterface
     {
         $returnCode = $this->rmaReasonForReturnCodesFactory->create();
-        $this->orderReturnCodesResource->load($returnCode, $detailsId);
+        $this->orderReturnCodesResource->load($returnCode, $reasonForReturnCodeId);
         if (!$returnCode->getId()) {
-            throw new NoSuchEntityException(__('Order export details not found.'));
+            throw new NoSuchEntityException(__('Reason for return code not found.'));
         }
         return $returnCode;
     }
 
-    public function delete(RmaReasonForReturnCodesInterface $exportDetails): bool
+    public function delete(RmaReasonForReturnCodesInterface $reasonForReturnCode): bool
     {
-        if (!($exportDetails instanceof AbstractModel)) {
-            throw new CouldNotSaveException(__('The implementation of OrderExportDetails has changed'));
+        if (!($reasonForReturnCode instanceof AbstractModel)) {
+            throw new CouldNotSaveException(__('The implementation of RmaReasonForReturnCodes has changed'));
         }
 
         try {
-            $this->orderReturnCodesResource->delete($exportDetails);
+            $this->orderReturnCodesResource->delete($reasonForReturnCode);
         } catch (\Exception $e) {
             throw new CouldNotDeleteException(__($e->getMessage()));
         }
@@ -68,8 +68,8 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
         return true;
     }
 
-    public function deleteById(int $detailsId): bool
+    public function deleteById(int $reasonForReturnCodeId): bool
     {
-        return $this->delete($this->getById($detailsId));
+        return $this->delete($this->getById($reasonForReturnCodeId));
     }
 }

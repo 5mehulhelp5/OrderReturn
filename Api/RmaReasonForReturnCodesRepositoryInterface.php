@@ -10,31 +10,31 @@ use Magento\Framework\Exception\NoSuchEntityException;
 interface RmaReasonForReturnCodesRepositoryInterface
 {
     /**
-     * @param RmaReasonForReturnCodesInterface $orderReturnDetails
+     * @param RmaReasonForReturnCodesInterface $reasonForReturnCode
      * @return RmaReasonForReturnCodesInterface
      * @throws CouldNotSaveException
      */
-    public function save(RmaReasonForReturnCodesInterface $orderReturnDetails): RmaReasonForReturnCodesInterface;
+    public function save(RmaReasonForReturnCodesInterface $reasonForReturnCode): RmaReasonForReturnCodesInterface;
 
     /**
-     * @param int $detailsId
+     * @param int $reasonForReturnCodeId
      * @return RmaReasonForReturnCodesInterface
      * @throws NoSuchEntityException
      */
-    public function getById(int $detailsId): RmaReasonForReturnCodesInterface;
+    public function getById(int $reasonForReturnCodeId): RmaReasonForReturnCodesInterface;
 
     /**
-     * @param RmaReasonForReturnCodesInterface $exportDetails
+     * @param RmaReasonForReturnCodesInterface $reasonForReturnCode
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(RmaReasonForReturnCodesInterface $exportDetails): bool;
+    public function delete(RmaReasonForReturnCodesInterface $reasonForReturnCode): bool;
 
     /**
-     * @param int $detailsId
+     * @param int $reasonForReturnCodeId
      * @return bool
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
-    public function deleteById(int $detailsId): bool;
+    public function deleteById(int $reasonForReturnCodeId): bool;
 }
