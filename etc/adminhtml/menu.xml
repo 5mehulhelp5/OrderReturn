@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- Title Item -->
+        <add id="Skuld_OrderReturn::rma_manager"
+             title="▶ RMA Manager"
+             module="Skuld_OrderReturn"
+             sortOrder="20"
+             parent="Skuld_Base::main_menu"
+             resource="Skuld_OrderReturn::rma_manager"/>
+
+        <!-- Submenu Items -->
+        <add id="Skuld_OrderReturn::return"
+             title="Order Return"
+             module="Skuld_OrderReturn"
+             sortOrder="10"
+             parent="Skuld_OrderReturn::rma_manager"
+             action="skuld_orderreturn/return/index"
+             resource="Skuld_OrderReturn::return"/>
+
+        <add id="Skuld_OrderReturn::configurations"
+             title="Configurations"
+             module="Skuld_OrderReturn"
+             sortOrder="20"
+             parent="Skuld_OrderReturn::rma_manager"
+             action="skuld_orderreturn/return/index"
+             resource="Skuld_OrderReturn::configurations"/>
+
+        <add id="Skuld_OrderReturn::reports"
+             title="Reports"
+             module="Skuld_OrderReturn"
+             sortOrder="30"
+             parent="Skuld_OrderReturn::rma_manager"
+             action="skuld_orderreturn/reports/index"
+             resource="Skuld_OrderReturn::reports"/>
+
+
+        <add id="Skuld_OrderReturn::grupo2"
+             title="▶ Grupo 2"
+             module="Skuld_OrderReturn"
+             parent="Skuld_Base::main_menu"
+             sortOrder="30"
+             resource="Skuld_OrderReturn::rma_manager"/>
+
+        <add id="Skuld_OrderReturn::opcion_extra"
+             title="Opción Extra"
+             module="Skuld_OrderReturn"
+             parent="Skuld_OrderReturn::grupo2"
+             sortOrder="10"
+             action="vendor_module/extra/index"
+             resource="Skuld_OrderReturn::rma_manager"/>
+    </menu>
+</config>

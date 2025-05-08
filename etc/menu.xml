@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-        <add id="Skuld_OrderReturn::helloworld" title="Hello World" module="Skuld_OrderReturn" sortOrder="51" resource="Skuld_OrderReturn::helloworld"/>
-        <add id="Skuld_OrderReturn::post" title="Manage Posts" module="Skuld_OrderReturn" sortOrder="10" action="Skuld_OrderReturn/post" resource="Skuld_OrderReturn::post" parent="Skuld_OrderReturn::helloworld"/>
-        <add id="Skuld_OrderReturn::hello_configuration" title="Configuration" module="Skuld_OrderReturn" sortOrder="99" parent="Skuld_OrderReturn::helloworld" action="adminhtml/system_config/edit/section/helloworld" resource="Mageplaza_HelloWorld::helloworld_configuration"/>
-    </menu>
-</config>

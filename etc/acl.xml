@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Skuld_Base::main_menu">
+                    <resource id="Skuld_OrderReturn::rma_manager" title="RMA Manager" sortOrder="20">
+                        <resource id="Skuld_OrderReturn::return" title="Returns" translate="title" sortOrder="21" />
+                        <resource id="Skuld_OrderReturn::configurations" title="Configurations" translate="title" sortOrder="22" />
+                        <resource id="Skuld_OrderReturn::reports" title="Reports" translate="title" sortOrder="23" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
