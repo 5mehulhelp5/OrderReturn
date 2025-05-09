@@ -2,6 +2,7 @@
 
 namespace Skuld\OrderReturn\Model;
 
+use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\AbstractModel;
@@ -62,7 +63,17 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
      */
     public function delete(RmaReturnRequestTypeCodesInterface $rmaReturnRequestTypeCode): bool
     {
-        // TODO: Implement delete() method.
+        if (!($rmaReturnRequestTypeCode instanceof AbstractModel)) {
+            throw new CouldNotSaveException(__('The implementation of ReturnRequestTypeCode has changed'));
+        }
+
+        try {
+            $this->rmaReturnRequestTypeCodesResourceModel->delete($rmaReturnRequestTypeCode);
+        } catch (\Exception $e) {
+            throw new CouldNotDeleteException(__($e->getMessage()));
+        }
+
+        return true;
     }
 
     /**
