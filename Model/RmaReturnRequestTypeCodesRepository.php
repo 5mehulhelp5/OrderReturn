@@ -81,6 +81,6 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
      */
     public function deleteById(int $returnRequestTypeCodeId): bool
     {
-        // TODO: Implement deleteById() method.
+        return $this->delete($this->getById($returnRequestTypeCodeId));
     }
 }
