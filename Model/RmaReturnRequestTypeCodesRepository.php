@@ -3,21 +3,30 @@
 namespace Skuld\OrderReturn\Model;
 
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\AbstractModel;
 use Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesInterface;
 use Skuld\OrderReturn\Api\RmaReturnRequestTypeCodesRepositoryInterface;
 use Skuld\OrderReturn\Model\ResourceModel\RmaReturnRequestTypeCodes as RmaReturnRequestTypeCodesResourceModel;
+use Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesFactory;
+
 class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRepositoryInterface
 {
     /**
      * @var RmaReturnRequestTypeCodesResourceModel
      */
     private $rmaReturnRequestTypeCodesResourceModel;
+    /**
+     * @var \Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesFactory
+     */
+    private $rmaReturnRequestTypeCodesFactory;
 
     public function __construct(
-        RmaReturnRequestTypeCodesResourceModel $rmaReturnRequestTypeCodesResourceModel
+        RmaReturnRequestTypeCodesResourceModel $rmaReturnRequestTypeCodesResourceModel,
+        RmaReturnRequestTypeCodesFactory $rmaReturnRequestTypeCodesFactory
     ) {
         $this->rmaReturnRequestTypeCodesResourceModel = $rmaReturnRequestTypeCodesResourceModel;
+        $this->rmaReturnRequestTypeCodesFactory = $rmaReturnRequestTypeCodesFactory;
     }
 
     /**
@@ -40,7 +49,12 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
      */
     public function getById(int $returnRequestTypeCodeId): RmaReturnRequestTypeCodesInterface
     {
-        // TODO: Implement getById() method.
+        $returnRequestTypeCode = $this->rmaReturnRequestTypeCodesFactory->create();
+        $this->rmaReturnRequestTypeCodesResourceModel->load($returnRequestTypeCode, $returnRequestTypeCodeId);
+        if (!$returnRequestTypeCode->getId()) {
+            throw new NoSuchEntityException(__('Request type code not found.'));
+        }
+        return $returnRequestTypeCode;
     }
 
     /**
