@@ -5,11 +5,12 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="orderReturnTest" xsi:type="object">Skuld\OrderReturn\Console\Command\OrderReturnTest</item>
+                <item name="orderReturnTypeCodes" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaReturnRequestTypeCodesTest</item>
             </argument>
         </arguments>
     </type>
 
-<!-- Start RmaReasonForReturnCodes  -->
+    <!-- Start RmaReasonForReturnCodes  -->
     <preference for="Skuld\OrderReturn\Api\Data\RmaReasonForReturnCodesInterface"
                 type="Skuld\OrderReturn\Model\RmaReasonForReturnCodes"/>
     <preference for="Skuld\OrderReturn\Api\RmaReasonForReturnCodesRepositoryInterface"
@@ -41,7 +42,7 @@
     <preference for="Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesSearchResultsInterface"
                 type="Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesSearchResults"/>
 
-    <virtualType name="Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaReturnRequestTypeCodesCollectionProcessor">
+    <virtualType name="Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaReturnRequestTypeCodesCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
         <arguments>
             <argument name="processors" xsi:type="array">
                 <item name="filters"    xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
