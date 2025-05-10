@@ -36,5 +36,24 @@
 <!-- Start RmaReturnRequestTypeCodes -->
     <preference for="Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesInterface"
                 type="Skuld\OrderReturn\Model\RmaReturnRequestTypeCodes"/>
+    <preference for="Skuld\OrderReturn\Api\RmaReturnRequestTypeCodesRepositoryInterface"
+                type="Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesRepository"/>
+    <preference for="Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesSearchResultsInterface"
+                type="Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesSearchResults"/>
 
+    <virtualType name="Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaReturnRequestTypeCodesCollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters"    xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting"    xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaReturnRequestTypeCodesCollectionProcessor</argument>
+        </arguments>
+    </type>
+    <!-- Finish RmaReturnRequestTypeCodes  -->
 </config>

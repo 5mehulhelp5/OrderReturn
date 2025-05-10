@@ -2,11 +2,12 @@
 
 namespace Skuld\OrderReturn\Api;
 
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesInterface;
-
+use Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesSearchResultsInterface;
 
 interface RmaReturnRequestTypeCodesRepositoryInterface
 {
@@ -38,4 +39,10 @@ interface RmaReturnRequestTypeCodesRepositoryInterface
      * @throws CouldNotDeleteException
      */
     public function deleteById(int $returnRequestTypeCodeId): bool;
+
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesSearchResultsInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): RmaReturnRequestTypeCodesSearchResultsInterface;
 }

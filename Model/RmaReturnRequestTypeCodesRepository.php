@@ -2,14 +2,20 @@
 
 namespace Skuld\OrderReturn\Model;
 
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\AbstractModel;
 use Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesInterface;
+use Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesSearchResultsInterface;
+use Skuld\OrderReturn\Api\Data\RmaReturnRequestTypeCodesSearchResultsInterfaceFactory;
 use Skuld\OrderReturn\Api\RmaReturnRequestTypeCodesRepositoryInterface;
 use Skuld\OrderReturn\Model\ResourceModel\RmaReturnRequestTypeCodes as RmaReturnRequestTypeCodesResourceModel;
 use Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesFactory;
+use Skuld\OrderReturn\Model\ResourceModel\RmaReturnRequestTypeCodes\Collection as RmaReturnRequestTypeCodesCollection;
+use Skuld\OrderReturn\Model\ResourceModel\RmaReturnRequestTypeCodes\CollectionFactory as RmaReturnRequestTypeCodesCollectionFactory;
 
 class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRepositoryInterface
 {
@@ -21,13 +27,31 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
      * @var \Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesFactory
      */
     private $rmaReturnRequestTypeCodesFactory;
+    /**
+     * @var RmaReturnRequestTypeCodesCollectionFactory
+     */
+    private $rmaReturnRequestTypeCodesCollectionFactory;
+    /**
+     * @var CollectionProcessorInterface
+     */
+    private $collectionProcessor;
+    /**
+     * @var RmaReturnRequestTypeCodesSearchResultsInterfaceFactory
+     */
+    private $rmaReturnRequestTypeCodesSearchResultsInterfaceFactory;
 
     public function __construct(
         RmaReturnRequestTypeCodesResourceModel $rmaReturnRequestTypeCodesResourceModel,
-        RmaReturnRequestTypeCodesFactory $rmaReturnRequestTypeCodesFactory
+        RmaReturnRequestTypeCodesFactory $rmaReturnRequestTypeCodesFactory,
+        RmaReturnRequestTypeCodesCollectionFactory $rmaReturnRequestTypeCodesCollectionFactory,
+        CollectionProcessorInterface $collectionProcessor,
+        RmaReturnRequestTypeCodesSearchResultsInterfaceFactory $rmaReturnRequestTypeCodesSearchResultsInterfaceFactory
     ) {
         $this->rmaReturnRequestTypeCodesResourceModel = $rmaReturnRequestTypeCodesResourceModel;
         $this->rmaReturnRequestTypeCodesFactory = $rmaReturnRequestTypeCodesFactory;
+        $this->rmaReturnRequestTypeCodesCollectionFactory = $rmaReturnRequestTypeCodesCollectionFactory;
+        $this->collectionProcessor = $collectionProcessor;
+        $this->rmaReturnRequestTypeCodesSearchResultsInterfaceFactory = $rmaReturnRequestTypeCodesSearchResultsInterfaceFactory;
     }
 
     /**
@@ -82,5 +106,23 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
     public function deleteById(int $returnRequestTypeCodeId): bool
     {
         return $this->delete($this->getById($returnRequestTypeCodeId));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): RmaReturnRequestTypeCodesSearchResultsInterface
+    {
+        /** @var RmaReturnRequestTypeCodesCollection $collection */
+        $collection = $this->rmaReturnRequestTypeCodesCollectionFactory->create();
+
+        $this->collectionProcessor->process($searchCriteria, $collection);
+
+        /** @var RmaReturnRequestTypeCodesSearchResultsInterface $searchResults */
+        $searchResults = $this->rmaReturnRequestTypeCodesSearchResultsInterfaceFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+        return $searchResults;
     }
 }
