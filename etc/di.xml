@@ -4,8 +4,8 @@
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="orderReturnTest" xsi:type="object">Skuld\OrderReturn\Console\Command\OrderReturnTest</item>
-                <item name="orderReturnTypeCodes" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaReturnRequestTypeCodesTest</item>
+                <item name="RmaReasonForReturnCodesTest" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaReasonForReturnCodesTest</item>
+                <item name="RmaReturnRequestTypeCodesTest" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaReturnRequestTypeCodesTest</item>
             </argument>
         </arguments>
     </type>

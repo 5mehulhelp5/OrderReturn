@@ -12,7 +12,7 @@ use Skuld\OrderReturn\Model\RmaReasonForReturnCodesRepository;
 use Skuld\OrderReturn\Api\Data\RmaReasonForReturnCodesInterface;
 use Skuld\OrderReturn\Api\Data\RmaReasonForReturnCodesInterfaceFactory;
 
-class OrderReturnTest extends Command
+class RmaReasonForReturnCodesTest extends Command
 {
     /**
      * @var RmaReasonForReturnCodesRepository
@@ -48,7 +48,7 @@ class OrderReturnTest extends Command
 
     protected function configure()
     {
-        $this->setName('order-return:test')
+        $this->setName('order-return:return-codes')
             ->setDescription('Command to test CRUD');
     }
 
