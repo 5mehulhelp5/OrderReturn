@@ -63,5 +63,22 @@
                 type="Skuld\OrderReturn\Model\RmaRequestItems"/>
     <preference for="Skuld\OrderReturn\Api\RmaRequestItemsRepositoryInterface"
                 type="Skuld\OrderReturn\Model\RmaRequestItemsRepository"/>
+    <preference for="Skuld\OrderReturn\Api\Data\RmaRequestItemsSearchResultsInterface"
+                type="Skuld\OrderReturn\Model\RmaRequestItemsSearchResults"/>
+
+    <virtualType name="Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaRequestItemsCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters"    xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting"    xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Skuld\OrderReturn\Model\RmaRequestItemsRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaRequestItemsCollectionProcessor</argument>
+        </arguments>
+    </type>
     <!-- Finish RmaRequestItems  -->
 </config>

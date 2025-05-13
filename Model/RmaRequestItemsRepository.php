@@ -2,14 +2,20 @@
 
 namespace Skuld\OrderReturn\Model;
 
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Model\AbstractModel;
 use Skuld\OrderReturn\Api\Data\RmaRequestItemsInterface;
+use Skuld\OrderReturn\Api\Data\RmaRequestItemsSearchResultsInterface;
+use Skuld\OrderReturn\Api\Data\RmaRequestItemsSearchResultsInterfaceFactory;
 use Skuld\OrderReturn\Api\RmaRequestItemsRepositoryInterface;
 use Skuld\OrderReturn\Model\ResourceModel\RmaRequestItems as RmaRequestItemsResource;
 use Skuld\OrderReturn\Model\RmaRequestItemsFactory;
+use Skuld\OrderReturn\Model\ResourceModel\RmaRequestItems\Collection as RmaRequestItemsCollection;
+use Skuld\OrderReturn\Model\ResourceModel\RmaRequestItems\CollectionFactory as RmaRequestItemsCollectionFactory;
 
 class RmaRequestItemsRepository implements RmaRequestItemsRepositoryInterface
 {
@@ -21,13 +27,31 @@ class RmaRequestItemsRepository implements RmaRequestItemsRepositoryInterface
      * @var \Skuld\OrderReturn\Model\RmaRequestItemsFactory
      */
     private $rmaRequestItemsFactory;
+    /**
+     * @var RmaRequestItemsCollectionFactory
+     */
+    private $rmaRequestItemsCollectionFactory;
+    /**
+     * @var CollectionProcessorInterface
+     */
+    private $collectionProcessor;
+    /**
+     * @var RmaRequestItemsSearchResultsInterfaceFactory
+     */
+    private $rmaRequestItemsSearchResultsInterfaceFactory;
 
     public function __construct(
         RmaRequestItemsResource $rmaRequestItemsResource,
-        RmaRequestItemsFactory $rmaRequestItemsFactory
+        RmaRequestItemsFactory $rmaRequestItemsFactory,
+        RmaRequestItemsCollectionFactory $rmaRequestItemsCollectionFactory,
+        CollectionProcessorInterface $collectionProcessor,
+        RmaRequestItemsSearchResultsInterfaceFactory $rmaRequestItemsSearchResultsInterfaceFactory
     ) {
         $this->rmaRequestItemsResource = $rmaRequestItemsResource;
         $this->rmaRequestItemsFactory = $rmaRequestItemsFactory;
+        $this->rmaRequestItemsCollectionFactory = $rmaRequestItemsCollectionFactory;
+        $this->collectionProcessor = $collectionProcessor;
+        $this->rmaRequestItemsSearchResultsInterfaceFactory = $rmaRequestItemsSearchResultsInterfaceFactory;
     }
 
     /**
@@ -43,6 +67,7 @@ class RmaRequestItemsRepository implements RmaRequestItemsRepositoryInterface
         } catch (\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         }
+        return $requestItem;
     }
 
     /**
@@ -71,6 +96,7 @@ class RmaRequestItemsRepository implements RmaRequestItemsRepositoryInterface
         } catch (\Exception $e) {
             throw new CouldNotDeleteException(__($e->getMessage()));
         }
+        return true;
     }
 
     /**
@@ -79,5 +105,23 @@ class RmaRequestItemsRepository implements RmaRequestItemsRepositoryInterface
     public function deleteById(int $requestItemId): bool
     {
         return $this->delete($this->getById($requestItemId));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): RmaRequestItemsSearchResultsInterface
+    {
+        /** @var RmaRequestItemsCollection $collection */
+        $collection = $this->rmaRequestItemsCollectionFactory->create();
+
+        $this->collectionProcessor->process($searchCriteria, $collection);
+
+        /** @var RmaRequestItemsSearchResultsInterface $searchResults */
+        $searchResults = $this->rmaRequestItemsSearchResultsInterfaceFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+        return $searchResults;
     }
 }
