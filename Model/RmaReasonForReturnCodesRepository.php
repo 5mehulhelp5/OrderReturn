@@ -54,6 +54,9 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
         $this->rmaReasonForReturnCodesSearchResultsInterfaceFactory = $rmaReasonForReturnCodesSearchResultsInterfaceFactory;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function save(RmaReasonForReturnCodesInterface $reasonForReturnCode): RmaReasonForReturnCodesInterface
     {
         if (!($reasonForReturnCode instanceof AbstractModel)) {
@@ -67,6 +70,9 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
         return $reasonForReturnCode;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getById(int $reasonForReturnCodeId): RmaReasonForReturnCodesInterface
     {
         $returnCode = $this->rmaReasonForReturnCodesFactory->create();
@@ -77,6 +83,9 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
         return $returnCode;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function delete(RmaReasonForReturnCodesInterface $reasonForReturnCode): bool
     {
         if (!($reasonForReturnCode instanceof AbstractModel)) {
@@ -92,11 +101,17 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
         return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function deleteById(int $reasonForReturnCodeId): bool
     {
         return $this->delete($this->getById($reasonForReturnCodeId));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getList(SearchCriteriaInterface $searchCriteria): RmaReasonForReturnCodesSearchResultsInterface
     {
         /** @var RmaReasonForReturnCodesCollection $collection */

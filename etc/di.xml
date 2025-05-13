@@ -61,5 +61,7 @@
     <!-- Start RmaRequestItems  -->
     <preference for="Skuld\OrderReturn\Api\Data\RmaRequestItemsInterface"
                 type="Skuld\OrderReturn\Model\RmaRequestItems"/>
+    <preference for="Skuld\OrderReturn\Api\RmaRequestItemsRepositoryInterface"
+                type="Skuld\OrderReturn\Model\RmaRequestItemsRepository"/>
     <!-- Finish RmaRequestItems  -->
 </config>
