@@ -67,6 +67,7 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
        } catch (\Exception $e) {
            throw new CouldNotSaveException(__($e->getMessage()));
        }
+       return $rmaReturnRequestTypeCode;
     }
 
     /**

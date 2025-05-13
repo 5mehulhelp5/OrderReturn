@@ -49,7 +49,7 @@ class RmaReasonForReturnCodesTest extends Command
     protected function configure()
     {
         $this->setName('order-return:return-codes')
-            ->setDescription('Command to test CRUD');
+            ->setDescription('Command to test reason for return codes CRUD');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
