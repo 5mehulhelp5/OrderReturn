@@ -5,7 +5,7 @@
     <table name="rma_request" resource="default" engine="innodb" comment="Return Merchandise Authorization">
         <column xsi:type="int"
                 name="id"
-                unsigned="false"
+                unsigned="true"
                 nullable="false"
                 identity="true"
                 comment="ID"
@@ -134,7 +134,7 @@
     <table name="rma_return_request_type_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
         <column xsi:type="int"
                 name="id"
-                unsigned="false"
+                unsigned="true"
                 nullable="false"
                 identity="true"
                 comment="ID"
@@ -160,22 +160,51 @@
             <column name="description"/>
         </constraint>
     </table>
+    <table name="rma_reason_for_return_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
+        <column xsi:type="int"
+                name="id"
+                unsigned="true"
+                nullable="false"
+                identity="true"
+                comment="ID"
+        />
+        <column xsi:type="varchar"
+                name="code"
+                nullable="false"
+                length="50"
+                default="0"
+                comment="Code"
+        />
+        <column xsi:type="varchar"
+                name="description"
+                nullable="false"
+                default=""
+                comment="Description"
+        />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RMA_REASON_FOR_RETURN_CODES_CODE_DESCRIPTION">
+            <column name="code"/>
+            <column name="description"/>
+        </constraint>
+    </table>
     <table name="rma_request_items" resource="default" engine="innodb" comment="Return Merchandise Authorization Items">
         <column xsi:type="int"
                 name="id"
-                unsigned="false"
+                unsigned="true"
                 nullable="false"
                 identity="true"
                 comment="ID"
         />
         <column xsi:type="int"
                 name="rma_request_id"
-                unsigned="false"
+                unsigned="true"
                 nullable="false"
                 comment="RMA Request ID"
         />
         <column xsi:type="int"
-                name="return_request_item"
+                name="return_request_item_id"
                 unsigned="true"
                 nullable="false"
                 comment="Product Order Item Id"
@@ -197,7 +226,7 @@
                 name="material"
                 nullable="true"
                 length="255"
-                comment="Sku"
+                comment="External Sku"
         />
         <column xsi:type="varchar"
                 name="base_unit"
@@ -242,7 +271,7 @@
                 length="255"
                 comment="Product Sku For Backend"
         />
-        <column xsi:type="smallint"
+        <column xsi:type="int"
                 name="reason_for_return_id"
                 unsigned="true"
                 nullable="false"
@@ -255,34 +284,11 @@
         <constraint xsi:type="foreign" referenceId="RMA_REQUEST_ITEMS_RMA_REQUEST_ID_RMA_REQUEST_ID"
                     table="rma_request_items" column="rma_request_id" referenceTable="rma_request"
                     referenceColumn="id" onDelete="CASCADE"/>
-    </table>
-    <table name="rma_reason_for_return_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
-        <column xsi:type="int"
-                name="id"
-                unsigned="false"
-                nullable="false"
-                identity="true"
-                comment="ID"
-        />
-        <column xsi:type="varchar"
-                name="code"
-                nullable="false"
-                length="50"
-                default="0"
-                comment="Code"
-        />
-        <column xsi:type="varchar"
-                name="description"
-                nullable="false"
-                default=""
-                comment="Description"
-        />
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="id"/>
-        </constraint>
-        <constraint xsi:type="unique" referenceId="RMA_REASON_FOR_RETURN_CODES_CODE_DESCRIPTION">
-            <column name="code"/>
-            <column name="description"/>
-        </constraint>
+        <constraint xsi:type="foreign" referenceId="RMA_REQUEST_ITEMS_REASON_FOR_RETURN_ID_RMA_REASON_FOR_RETURN_CODES_ID"
+                    table="rma_request_items" column="reason_for_return_id" referenceTable="rma_reason_for_return_codes"
+                    referenceColumn="id" onDelete="CASCADE"/>
+        <index referenceId="RMA_REQUEST_ITEMS_RMA_REQUEST_ID" indexType="btree">
+            <column name="rma_request_id"/>
+        </index>
     </table>
 </schema>

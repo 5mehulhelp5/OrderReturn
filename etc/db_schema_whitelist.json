@@ -47,7 +47,7 @@
         "column": {
             "id": true,
             "rma_request_id": true,
-            "return_request_item": true,
+            "return_request_item_id": true,
             "product_name": true,
             "qty_returned": true,
             "material": true,
