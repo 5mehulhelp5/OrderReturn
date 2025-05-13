@@ -57,4 +57,9 @@
         </arguments>
     </type>
     <!-- Finish RmaReturnRequestTypeCodes  -->
+
+    <!-- Start RmaRequestItems  -->
+    <preference for="Skuld\OrderReturn\Api\Data\RmaRequestItemsInterface"
+                type="Skuld\OrderReturn\Model\RmaRequestItems"/>
+    <!-- Finish RmaRequestItems  -->
 </config>
