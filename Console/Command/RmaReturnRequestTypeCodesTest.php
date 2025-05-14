@@ -2,6 +2,9 @@
 
 namespace Skuld\OrderReturn\Console\Command;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SortOrder;
+use Magento\Framework\Api\SortOrderBuilder;
 use Skuld\OrderReturn\Model\RmaReturnRequestTypeCodesRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,15 +22,27 @@ class RmaReturnRequestTypeCodesTest extends Command
      * @var RmaReturnRequestTypeCodesFactory
      */
     private $rmaReturnRequestTypeCodesFactory;
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    private $searchCriteriaBuilder;
+    /**
+     * @var SortOrderBuilder
+     */
+    private $sortOrderBuilder;
 
     public function __construct(
         RmaReturnRequestTypeCodesRepository $returnRequestTypeCodesRepository,
         RmaReturnRequestTypeCodesFactory    $rmaReturnRequestTypeCodesFactory,
+        SearchCriteriaBuilder               $searchCriteriaBuilder,
+        SortOrderBuilder                    $sortOrderBuilder,
         string                              $name = null
     ) {
         parent::__construct($name);
         $this->returnRequestTypeCodesRepository = $returnRequestTypeCodesRepository;
         $this->rmaReturnRequestTypeCodesFactory = $rmaReturnRequestTypeCodesFactory;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->sortOrderBuilder = $sortOrderBuilder;
     }
 
     protected function configure()
@@ -38,7 +53,7 @@ class RmaReturnRequestTypeCodesTest extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->deleteById($output, 29);
+        $this->getList($output);
         return 0;
     }
 
@@ -68,6 +83,18 @@ class RmaReturnRequestTypeCodesTest extends Command
 
     protected function getList($output) {
         $output->writeln('start: '.__FUNCTION__);
+        $sortOrder = $this->sortOrderBuilder
+            ->setField('id')
+            ->setDirection(SortOrder::SORT_ASC)
+            ->create();
+        $this->searchCriteriaBuilder
+            ->addSortOrder($sortOrder)
+            ->setCurrentPage(1)
+            ->setPageSize(30);
+        $returnRequestTypeCodes = $this->returnRequestTypeCodesRepository->getList($this->searchCriteriaBuilder->create())->getItems();
+        foreach ($returnRequestTypeCodes as $returnRequestTypeCode) {
+            $output->writeln(print_r($returnRequestTypeCode->getData(), true));
+        }
         $output->writeln('finish: '.__FUNCTION__);
     }
 }

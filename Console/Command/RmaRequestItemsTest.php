@@ -2,6 +2,9 @@
 
 namespace Skuld\OrderReturn\Console\Command;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SortOrder;
+use Magento\Framework\Api\SortOrderBuilder;
 use Skuld\OrderReturn\Model\RmaRequestItemsRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,15 +22,27 @@ class RmaRequestItemsTest extends Command
      * @var RmaRequestItemsFactory
      */
     private $rmaRequestItemsFactory;
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    private $searchCriteriaBuilder;
+    /**
+     * @var SortOrderBuilder
+     */
+    private $sortOrderBuilder;
 
     public function __construct(
-        RmaRequestItemsRepository $rmaRequestItemsRepository,
-        RmaRequestItemsFactory $rmaRequestItemsFactory,
+        RmaRequestItemsRepository   $rmaRequestItemsRepository,
+        RmaRequestItemsFactory      $rmaRequestItemsFactory,
+        SearchCriteriaBuilder       $searchCriteriaBuilder,
+        SortOrderBuilder            $sortOrderBuilder,
         string $name = null
     ) {
         parent::__construct($name);
         $this->rmaRequestItemsRepository = $rmaRequestItemsRepository;
         $this->rmaRequestItemsFactory = $rmaRequestItemsFactory;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->sortOrderBuilder = $sortOrderBuilder;
     }
 
     protected function configure()
@@ -38,7 +53,7 @@ class RmaRequestItemsTest extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->deleteById($output, 2);
+        $this->getList($output);
         return 0;
     }
 
@@ -80,6 +95,18 @@ class RmaRequestItemsTest extends Command
 
     protected function getList($output) {
         $output->writeln('start: '.__FUNCTION__);
+        $sortOrder = $this->sortOrderBuilder
+            ->setField('id')
+            ->setDirection(SortOrder::SORT_ASC)
+            ->create();
+        $this->searchCriteriaBuilder
+            ->addSortOrder($sortOrder)
+            ->setCurrentPage(1)
+            ->setPageSize(30);
+        $requestItems = $this->rmaRequestItemsRepository->getList($this->searchCriteriaBuilder->create())->getItems();
+        foreach ($requestItems as $requestItem) {
+            $output->writeln(print_r($requestItem->getData(), true));
+        }
         $output->writeln('finish: '.__FUNCTION__);
     }
 }
