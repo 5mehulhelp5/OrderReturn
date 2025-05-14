@@ -2,6 +2,120 @@
 
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="rma_return_request_type_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
+        <column xsi:type="int"
+                name="id"
+                unsigned="true"
+                nullable="false"
+                identity="true"
+                comment="ID"
+        />
+        <column xsi:type="varchar"
+                name="code"
+                nullable="false"
+                length="50"
+                comment="Code"
+        />
+        <column xsi:type="varchar"
+                name="description"
+                nullable="false"
+                default=""
+                comment="Description"
+        />
+        <column xsi:type="timestamp"
+                name="created_at"
+                on_update="false"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Created At"
+        />
+        <column xsi:type="timestamp"
+                name="updated_at"
+                on_update="true"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Updated At"
+        />
+        <column xsi:type="timestamp"
+                name="deleted_at"
+                nullable="true"
+                default="NULL"
+                comment="Deleted At"
+        />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RMA_RETURN_REQUEST_TYPE_CODES_CODE_DESCRIPTION">
+            <column name="code"/>
+            <column name="description"/>
+        </constraint>
+        <index referenceId="RMA_RETURN_REQUEST_TYPE_CODES_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+        <index referenceId="RMA_RETURN_REQUEST_TYPE_CODES_UPDATED_AT" indexType="btree">
+            <column name="updated_at"/>
+        </index>
+        <index referenceId="RMA_RETURN_REQUEST_TYPE_CODES_DELETED_AT" indexType="btree">
+            <column name="deleted_at"/>
+        </index>
+    </table>
+    <table name="rma_reason_for_return_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
+        <column xsi:type="int"
+                name="id"
+                unsigned="true"
+                nullable="false"
+                identity="true"
+                comment="ID"
+        />
+        <column xsi:type="varchar"
+                name="code"
+                nullable="false"
+                length="50"
+                comment="Code"
+        />
+        <column xsi:type="varchar"
+                name="description"
+                nullable="false"
+                default=""
+                comment="Description"
+        />
+        <column xsi:type="timestamp"
+                name="created_at"
+                on_update="false"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Created At"
+        />
+        <column xsi:type="timestamp"
+                name="updated_at"
+                on_update="true"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Updated At"
+        />
+        <column xsi:type="timestamp"
+                name="deleted_at"
+                nullable="true"
+                default="NULL"
+                comment="Deleted At"
+        />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RMA_REASON_FOR_RETURN_CODES_CODE_DESCRIPTION">
+            <column name="code"/>
+            <column name="description"/>
+        </constraint>
+        <index referenceId="RMA_REASON_FOR_RETURN_CODES_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+        <index referenceId="RMA_REASON_FOR_RETURN_CODES_UPDATED_AT" indexType="btree">
+            <column name="updated_at"/>
+        </index>
+        <index referenceId="RMA_REASON_FOR_RETURN_CODES_DELETED_AT" indexType="btree">
+            <column name="deleted_at"/>
+        </index>
+    </table>
     <table name="rma_request" resource="default" engine="innodb" comment="Return Merchandise Authorization">
         <column xsi:type="int"
                 name="id"
@@ -14,7 +128,6 @@
                 name="return_request_id"
                 nullable="false"
                 length="50"
-                default="0"
                 comment="Return Request ID"
         />
         <column xsi:type="varchar"
@@ -50,7 +163,6 @@
                 unsigned="true"
                 nullable="false"
                 identity="false"
-                default="0"
                 comment="Customer ID"
         />
         <column xsi:type="varchar"
@@ -63,7 +175,6 @@
                 name="order_id"
                 unsigned="true"
                 nullable="false"
-                default="0"
                 comment="Order ID"
         />
         <column xsi:type="varchar"
@@ -72,11 +183,10 @@
                 length="50"
                 comment="Order Increment Id"
         />
-        <column xsi:type="smallint"
+        <column xsi:type="int"
                 name="return_request_type_id"
                 unsigned="true"
                 nullable="false"
-                default="0"
                 comment="Return Request Type ID"
         />
         <column xsi:type="timestamp"
@@ -93,6 +203,12 @@
                 default="CURRENT_TIMESTAMP"
                 comment="Updated At"
         />
+        <column xsi:type="timestamp"
+                name="deleted_at"
+                nullable="true"
+                default="NULL"
+                comment="Deleted At"
+        />
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
@@ -101,6 +217,9 @@
         />
         <constraint xsi:type="foreign" referenceId="RMA_REQUEST_SOLD_TO_PARTY_CUSTOMER_ENTITY_ENTITY_ID" table="rma_request"
                     column="sold_to_party" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"
+        />
+        <constraint xsi:type="foreign" referenceId="RMA_REQUEST_RETURN_REQUEST_TYPE_ID_RMA_RETURN_REQUEST_TYPE_CODES_ID" table="rma_request"
+                    column="return_request_type_id" referenceTable="rma_return_request_type_codes" referenceColumn="id" onDelete="CASCADE"
         />
         <constraint xsi:type="unique" referenceId="RMA_REQUEST_RETURN_REQUEST_ID_DISTRIBUTION_CHANNEL">
             <column name="return_request_id"/>
@@ -130,66 +249,15 @@
         <index referenceId="RMA_REQUEST_UPDATED_AT" indexType="btree">
             <column name="updated_at"/>
         </index>
+        <index referenceId="RMA_REQUEST_DELETED_AT" indexType="btree">
+            <column name="deleted_at"/>
+        </index>
+        <index referenceId="RMA_REQUEST_STATUS_CREATED_AT" indexType="btree">
+            <column name="status"/>
+            <column name="created_at"/>
+        </index>
     </table>
-    <table name="rma_return_request_type_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
-        <column xsi:type="int"
-                name="id"
-                unsigned="true"
-                nullable="false"
-                identity="true"
-                comment="ID"
-        />
-        <column xsi:type="varchar"
-                name="code"
-                nullable="false"
-                length="50"
-                default="0"
-                comment="Code"
-        />
-        <column xsi:type="varchar"
-                name="description"
-                nullable="false"
-                default=""
-                comment="Description"
-        />
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="id"/>
-        </constraint>
-        <constraint xsi:type="unique" referenceId="RMA_RETURN_REQUEST_TYPE_CODES_CODE_DESCRIPTION">
-            <column name="code"/>
-            <column name="description"/>
-        </constraint>
-    </table>
-    <table name="rma_reason_for_return_codes" resource="default" engine="innodb" comment="RMA ReturnRequestType Codes">
-        <column xsi:type="int"
-                name="id"
-                unsigned="true"
-                nullable="false"
-                identity="true"
-                comment="ID"
-        />
-        <column xsi:type="varchar"
-                name="code"
-                nullable="false"
-                length="50"
-                default="0"
-                comment="Code"
-        />
-        <column xsi:type="varchar"
-                name="description"
-                nullable="false"
-                default=""
-                comment="Description"
-        />
-        <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="id"/>
-        </constraint>
-        <constraint xsi:type="unique" referenceId="RMA_REASON_FOR_RETURN_CODES_CODE_DESCRIPTION">
-            <column name="code"/>
-            <column name="description"/>
-        </constraint>
-    </table>
-    <table name="rma_request_items" resource="default" engine="innodb" comment="Return Merchandise Authorization Items">
+    <table name="rma_request_items" resource="default" engine="innodb" comment="RMA - Items attached to return requests">
         <column xsi:type="int"
                 name="id"
                 unsigned="true"
@@ -275,8 +343,27 @@
                 name="reason_for_return_id"
                 unsigned="true"
                 nullable="false"
-                default="0"
                 comment="Reason For Return ID"
+        />
+        <column xsi:type="timestamp"
+                name="created_at"
+                on_update="false"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Created At"
+        />
+        <column xsi:type="timestamp"
+                name="updated_at"
+                on_update="true"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Updated At"
+        />
+        <column xsi:type="timestamp"
+                name="deleted_at"
+                nullable="true"
+                default="NULL"
+                comment="Deleted At"
         />
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
@@ -289,6 +376,15 @@
                     referenceColumn="id" onDelete="CASCADE"/>
         <index referenceId="RMA_REQUEST_ITEMS_RMA_REQUEST_ID" indexType="btree">
             <column name="rma_request_id"/>
+        </index>
+        <index referenceId="RMA_REQUEST_ITEMS_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+        <index referenceId="RMA_REQUEST_ITEMS_UPDATED_AT" indexType="btree">
+            <column name="updated_at"/>
+        </index>
+        <index referenceId="RMA_REQUEST_ITEMS_DELETED_AT" indexType="btree">
+            <column name="deleted_at"/>
         </index>
     </table>
 </schema>
