@@ -38,7 +38,7 @@ class RmaReturnRequestTypeCodesTest extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->createNewRecord($output);
+        $this->deleteById($output, 29);
         return 0;
     }
 
@@ -59,8 +59,10 @@ class RmaReturnRequestTypeCodesTest extends Command
         $output->writeln('finish: '.__FUNCTION__);
     }
 
-    protected function deleteById($output) {
+    protected function deleteById($output, $id) {
         $output->writeln('start: '.__FUNCTION__);
+        $deleteStatus = $this->returnRequestTypeCodesRepository->deleteById($id);
+        $output->writeln($deleteStatus);
         $output->writeln('finish: '.__FUNCTION__);
     }
 

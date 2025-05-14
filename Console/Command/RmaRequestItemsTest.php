@@ -38,7 +38,7 @@ class RmaRequestItemsTest extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->createNewRecord($output);
+        $this->deleteById($output, 2);
         return 0;
     }
 
@@ -71,8 +71,10 @@ class RmaRequestItemsTest extends Command
         $output->writeln('finish: '.__FUNCTION__);
     }
 
-    protected function deleteById($output) {
+    protected function deleteById($output, $id) {
         $output->writeln('start: '.__FUNCTION__);
+        $deleteStatus = $this->rmaRequestItemsRepository->deleteById($id);
+        $output->writeln($deleteStatus);
         $output->writeln('finish: '.__FUNCTION__);
     }
 
