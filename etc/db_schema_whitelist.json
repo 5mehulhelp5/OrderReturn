@@ -13,7 +13,8 @@
             "order_increment_id": true,
             "return_request_type_id": true,
             "created_at": true,
-            "updated_at": true
+            "updated_at": true,
+            "deleted_at": true
         },
         "index": {
             "RMA_REQUEST_RETURN_REQUEST_ID": true,
@@ -23,24 +24,35 @@
             "RMA_REQUEST_ORDER_INCREMENT_ID": true,
             "RMA_REQUEST_SOLD_TO_PARTY": true,
             "RMA_REQUEST_CREATED_AT": true,
-            "RMA_REQUEST_UPDATED_AT": true
+            "RMA_REQUEST_UPDATED_AT": true,
+            "RMA_REQUEST_DELETED_AT": true,
+            "RMA_REQUEST_STATUS_CREATED_AT": true
         },
         "constraint": {
             "PRIMARY": true,
             "RMA_REQUEST_ORDER_ID_SALES_ORDER_ENTITY_ID": true,
             "RMA_REQUEST_SOLD_TO_PARTY_CUSTOMER_ENTITY_ENTITY_ID": true,
-            "RMA_REQUEST_RETURN_REQUEST_ID_DISTRIBUTION_CHANNEL": true
+            "RMA_REQUEST_RETURN_REQUEST_ID_DISTRIBUTION_CHANNEL": true,
+            "FK_FAAFC4B76E28D01CC211967725C4AD73": true
         }
     },
     "rma_return_request_type_codes": {
         "column": {
             "id": true,
             "code": true,
-            "description": true
+            "description": true,
+            "created_at": true,
+            "updated_at": true,
+            "deleted_at": true
         },
         "constraint": {
             "PRIMARY": true,
             "RMA_RETURN_REQUEST_TYPE_CODES_CODE_DESCRIPTION": true
+        },
+        "index": {
+            "RMA_RETURN_REQUEST_TYPE_CODES_CREATED_AT": true,
+            "RMA_RETURN_REQUEST_TYPE_CODES_UPDATED_AT": true,
+            "RMA_RETURN_REQUEST_TYPE_CODES_DELETED_AT": true
         }
     },
     "rma_request_items": {
@@ -57,22 +69,40 @@
             "qty_approved": true,
             "product_admin_name": true,
             "product_admin_sku": true,
-            "reason_for_return_id": true
+            "reason_for_return_id": true,
+            "created_at": true,
+            "updated_at": true,
+            "deleted_at": true
         },
         "constraint": {
             "PRIMARY": true,
-            "RMA_REQUEST_ITEMS_RMA_REQUEST_ID_RMA_REQUEST_ID": true
+            "RMA_REQUEST_ITEMS_RMA_REQUEST_ID_RMA_REQUEST_ID": true,
+            "FK_4D9886AFE7D605D7B08414D9214C0A7F": true
+        },
+        "index": {
+            "RMA_REQUEST_ITEMS_RMA_REQUEST_ID": true,
+            "RMA_REQUEST_ITEMS_CREATED_AT": true,
+            "RMA_REQUEST_ITEMS_UPDATED_AT": true,
+            "RMA_REQUEST_ITEMS_DELETED_AT": true
         }
     },
     "rma_reason_for_return_codes": {
         "column": {
             "id": true,
             "code": true,
-            "description": true
+            "description": true,
+            "created_at": true,
+            "updated_at": true,
+            "deleted_at": true
         },
         "constraint": {
             "PRIMARY": true,
             "RMA_REASON_FOR_RETURN_CODES_CODE_DESCRIPTION": true
+        },
+        "index": {
+            "RMA_REASON_FOR_RETURN_CODES_CREATED_AT": true,
+            "RMA_REASON_FOR_RETURN_CODES_UPDATED_AT": true,
+            "RMA_REASON_FOR_RETURN_CODES_DELETED_AT": true
         }
     }
 }

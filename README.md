@@ -10,6 +10,7 @@ TODO:
 - Generate admin panel ui table component for all models
 - Generate admin panel form for "\*_codes" CRUDs
 - Establish and build module final configurations
+- Add config.xml for default config values
 - Generate frontend (store) button for start rma request
 - Generate form for rma request creation
 - Generate profile option for access all rma requested 
@@ -21,25 +22,26 @@ TODO:
     - Simulate SAP actions and status changes on rma request with cron jobs
     - Simulate order creation by automatized process
     - Simulate return request creation by automatized process
-  - Production disables all mock apis and simulation process
+  - Production 
+    - disables all mock apis and simulation process
 - Create a public Skuld_Base module with its functionalities
 - Improve module installation process
 - Evaluate viability for a TransportData class and Extension Attributes
 
+
 - URGENT TODO:
   - Update interfaces and repositories to add timestamps and soft-delete functionalities to all models
   - Update CLI commands for testing timestamps and soft deletes
+
+
+
+- Working on:
   - Create rma_request CRUD
 
+
 - RECENTLY ADDED
-  - Add "deleted_at" column to "\*_codes" and rma_request_items tables 
-  - Add timestamps for creation and update to "\*_codes" and rma_request_items tables
-  - Improves db_schema for tables declaration ( removes unnecessary default options ) 
-  - Adds multi-column indexes ( Composite Indexes )
-    - rma_request
-      - RMA_REQUEST_STATUS_CREATED_AT
-        - status
-        - created_at
+  - db_schema_whitelist.json update
+
 
 DONE:
 - Tables creation by db_schema with index optimization:
@@ -47,6 +49,16 @@ DONE:
   - rma_request_items
   - rma_return_request_type_codes
   - rma_reason_for_return_codes
+
+
+- Soft delete support (only db level fron now)
+  - Add "deleted_at" column to "\*_codes" and rma_request_items tables
+  - Add timestamps for creation and update to "\*_codes" and rma_request_items tables
+
+
+- DB optimization
+  - Adds multi-column indexes ( Composite Indexes )
+    - RMA_REQUEST_STATUS_CREATED_AT
 
 
 - Add db_schema_whitelist.json
