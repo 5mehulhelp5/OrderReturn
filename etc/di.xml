@@ -88,5 +88,22 @@
                 type="Skuld\OrderReturn\Model\RmaRequest"/>
     <preference for="Skuld\OrderReturn\Api\RmaRequestRepositoryInterface"
                 type="Skuld\OrderReturn\Model\RmaRequestRepository"/>
+    <preference for="Skuld\OrderReturn\Api\Data\RmaRequestSearchResultsInterface"
+                type="Skuld\OrderReturn\Model\RmaRequestSearchResults"/>
+
+    <virtualType name="Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaRequestCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters"    xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting"    xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Skuld\OrderReturn\Model\RmaRequesRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Skuld\OrderReturn\Virtual\Model\Api\SearchCriteria\RmaRequestCollectionProcessor</argument>
+        </arguments>
+    </type>
     <!-- Finish RmaRequest  -->
 </config>

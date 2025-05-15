@@ -2,10 +2,12 @@
 
 namespace Skuld\OrderReturn\Api;
 
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Skuld\OrderReturn\Api\Data\RmaRequestInterface;
+use Skuld\OrderReturn\Api\Data\RmaRequestSearchResultsInterface;
 
 interface RmaRequestRepositoryInterface
 {
@@ -52,4 +54,10 @@ interface RmaRequestRepositoryInterface
      * @throws CouldNotDeleteException
      */
     public function softDeleteById(int $requestId): RmaRequestInterface;
+
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return Skuld\OrderReturn\Api\Data\RmaRequestSearchResultsInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria): RmaRequestSearchResultsInterface;
 }

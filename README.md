@@ -39,12 +39,12 @@ TODO:
 
     
 - Working on:
-  - Create rma_request CRUD
+  - Create rma_request cli command
+  - Update CLI commands for testing timestamps and soft deletes
 
 
 - RECENTLY ADDED
-  - validate model interfaces for nullable columns
-  - deteted_at logic on all models
+  - Create rma_request CRUD
 
 
 DONE:
