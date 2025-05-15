@@ -13,104 +13,113 @@ class RmaRequest extends AbstractModel implements RmaRequestInterface
         $this->_init(RmaRequestResourceModel::class);
     }
 
-    public function getReturnRequestId(): int
+    public function getReturnRequestId(): string
     {
-        // TODO: Implement getReturnRequestId() method.
+        return (string) $this->getData('return_request_id');
     }
 
     public function setReturnRequestId($returnRequestId): RmaRequestInterface
     {
-        // TODO: Implement setReturnRequestId() method.
+        $this->setData('return_request_id', $returnRequestId);
+        return $this;
     }
 
     public function getStatus(): string
     {
-        // TODO: Implement getStatus() method.
+        return (string) $this->getData('status');
     }
 
     public function setStatus($status): RmaRequestInterface
     {
-        // TODO: Implement setStatus() method.
+        $this->setData('status', $status);
+        return $this;
     }
 
     public function getIsActive(): bool
     {
-        // TODO: Implement getIsActive() method.
+        return (bool) $this->getData('is_active');
     }
 
-    public function setIsActive($isActive): RmaRequestInterface
+    public function setIsActive(bool $isActive): RmaRequestInterface
     {
-        // TODO: Implement setIsActive() method.
+        $this->setData('is_active', ($isActive) ? 1 : 0);
+        return $this;
     }
 
     public function getSalesOrganization(): int
     {
-        // TODO: Implement getSalesOrganization() method.
+        return (int) $this->getData('sales_organization');
     }
 
     public function setSalesOrganization($salesOrganization): RmaRequestInterface
     {
-        // TODO: Implement setSalesOrganization() method.
+        $this->setData('sales_organization', $salesOrganization);
     }
 
     public function getDistributionChannel(): int
     {
-        // TODO: Implement getDistributionChannel() method.
+        return (int) $this->getData('distribution_channel');
     }
 
     public function setDistributionChannel($distributionChannel): RmaRequestInterface
     {
-        // TODO: Implement setDistributionChannel() method.
+        $this->getData('distribution_channel', $distributionChannel);
+        return $this;
     }
 
     public function getSoldToParty(): int
     {
-        // TODO: Implement getSoldToParty() method.
+        return (int) $this->getData('sold_to_party');
     }
 
     public function setSoldToParty($soldToParty): RmaRequestInterface
     {
-        // TODO: Implement setSoldToParty() method.
+        $this->setData('sold_to_party', $soldToParty);
+        return $this;
     }
 
     public function getCustomerCustomEmail(): string
     {
-        // TODO: Implement getCustomerCustomEmail() method.
+        return (string) $this->getData('customer_custom_email');
     }
 
     public function setCustomerCustomEmail($customerCustomEmail): RmaRequestInterface
     {
-        // TODO: Implement setCustomerCustomEmail() method.
+        $this->setData('customer_custom_email', $customerCustomEmail);
+        return $this;
     }
 
     public function getOrderId(): int
     {
-        // TODO: Implement getOrderId() method.
+        return (int) $this->getData('order_id');
     }
 
     public function setOrderId(int $orderId): RmaRequestInterface
     {
-        // TODO: Implement setOrderId() method.
+        $this->setData('order_id', $orderId);
+        return $this;
     }
 
     public function getOrderIncrementId(): ?string
     {
-        // TODO: Implement getOrderIncrementId() method.
+        return ($this->hasData('order_increment_id')) ? (string) $this->getData('order_increment_id') : null;
     }
 
     public function setOrderIncrementId(string $orderIncrementId): RmaRequestInterface
     {
-        // TODO: Implement setOrderIncrementId() method.
+        $this->setData('order_increment_id', $orderIncrementId);
+        return $this;
     }
 
     public function getReturnRequestTypeId(): int
     {
-        // TODO: Implement getReturnRequestTypeId() method.
+        return (int) $this->getData('return_request_type_id');
     }
 
     public function setReturnRequestTypeId(int $returnRequestTypeId): RmaRequestInterface
     {
-        // TODO: Implement setReturnRequestTypeId() method.
+        $this->setData('return_request_type_id', $returnRequestTypeId);
+        return $this;
     }
 
     public function getDeletedAt(): ?\DateTime

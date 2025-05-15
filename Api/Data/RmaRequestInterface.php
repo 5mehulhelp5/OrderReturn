@@ -6,7 +6,7 @@ interface RmaRequestInterface
 {
     public function getId();
 
-    public function getReturnRequestId(): int;
+    public function getReturnRequestId(): string;
 
     public function setReturnRequestId($returnRequestId): RmaRequestInterface;
 
@@ -16,7 +16,7 @@ interface RmaRequestInterface
 
     public function getIsActive(): bool;
 
-    public function setIsActive($isActive): RmaRequestInterface;
+    public function setIsActive(bool $isActive): RmaRequestInterface;
 
     public function getSalesOrganization(): int;
 

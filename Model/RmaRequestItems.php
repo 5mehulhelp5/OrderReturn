@@ -37,7 +37,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
 
     public function getProductName(): ?string
     {
-        return (string) $this->getData('product_name');
+        return ($this->hasData('product_name')) ? (string) $this->getData('product_name') : null;
     }
 
     public function setProductName($productName): RmaRequestItemsInterface
@@ -48,7 +48,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
 
     public function getQtyReturned(): ?float
     {
-        return (float) $this->getData('qty_returned');
+        return ($this->hasData('qty_returned')) ? (float) $this->getData('qty_returned') : null;
     }
 
     public function setQtyReturned($qtyReturned): RmaRequestItemsInterface
@@ -59,7 +59,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
 
     public function getMaterial(): ?string
     {
-        return (string) $this->getData('material');
+        return ($this->hasData('material')) ? (string) $this->getData('material') : null;
     }
 
     public function setMaterial($material): RmaRequestItemsInterface
@@ -70,7 +70,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
 
     public function getBaseUnit(): ?string
     {
-        return (string) $this->getData('base_unit');
+        return ($this->hasData('base_unit')) ? (string) $this->getData('base_unit') : null;
     }
 
     public function setBaseUnit($baseUnit): RmaRequestItemsInterface
@@ -92,7 +92,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
 
     public function getQtyAuthorized(): ?float
     {
-        return (float) $this->getData('qty_authorized');
+        return ($this->hasData('qty_authorized')) ? (float) $this->getData('qty_authorized') : null;
     }
 
     public function setQtyAuthorized($qtyAuthorized): RmaRequestItemsInterface
@@ -103,7 +103,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
 
     public function getQtyApproved(): ?float
     {
-        return (float) $this->getData('qty_approved');
+        return ($this->hasData('qty_approved')) ? (float) $this->getData('qty_approved') : null;
     }
 
     public function setQtyApproved($qtyApproved): RmaRequestItemsInterface
@@ -125,7 +125,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
 
     public function getProductAdminSku(): ?string
     {
-        return (string) $this->getData('product_admin_sku');
+        return ($this->hasData('product_admin_sku')) ? (string) $this->getData('product_admin_sku') : null;
     }
 
     public function setProductAdminSku($productAdminSku): RmaRequestItemsInterface
