@@ -33,6 +33,8 @@ TODO:
 - URGENT TODO:
   - Update interfaces and repositories to add timestamps and soft-delete functionalities to all models
   - Update CLI commands for testing timestamps and soft deletes
+  - Add isDeleted function to entity models
+  - getById by default will not show soft-deleted data
 
 
     

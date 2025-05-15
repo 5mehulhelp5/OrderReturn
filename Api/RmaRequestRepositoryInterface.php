@@ -48,6 +48,8 @@ interface RmaRequestRepositoryInterface
     /**
      * @param int $requestId
      * @return \Skuld\OrderReturn\Api\Data\RmaRequestInterface
+     * @throws NoSuchEntityException
+     * @throws CouldNotDeleteException
      */
     public function softDeleteById(int $requestId): RmaRequestInterface;
 }
