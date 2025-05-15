@@ -14,19 +14,19 @@ interface RmaRequestItemsInterface
 
     public function setReturnRequestItemId($returnRequestItemId): RmaRequestItemsInterface;
 
-    public function getProductName(): string;
+    public function getProductName(): ?string;
 
     public function setProductName($productName): RmaRequestItemsInterface;
 
-    public function getQtyReturned(): float;
+    public function getQtyReturned(): ?float;
 
     public function setQtyReturned($qtyReturned): RmaRequestItemsInterface;
 
-    public function getMaterial(): string;
+    public function getMaterial(): ?string;
 
     public function setMaterial($material): RmaRequestItemsInterface;
 
-    public function getBaseUnit(): string;
+    public function getBaseUnit(): ?string;
 
     public function setBaseUnit($baseUnit): RmaRequestItemsInterface;
 
@@ -34,11 +34,11 @@ interface RmaRequestItemsInterface
 
     public function setQtyRequested($qtyRequested): RmaRequestItemsInterface;
 
-    public function getQtyAuthorized(): float;
+    public function getQtyAuthorized(): ?float;
 
     public function setQtyAuthorized($qtyAuthorized): RmaRequestItemsInterface;
 
-    public function getQtyApproved(): float;
+    public function getQtyApproved(): ?float;
 
     public function setQtyApproved($qtyApproved): RmaRequestItemsInterface;
 
@@ -46,11 +46,15 @@ interface RmaRequestItemsInterface
 
     public function setProductAdminName($productAdminName): RmaRequestItemsInterface;
 
-    public function getProductAdminSku(): string;
+    public function getProductAdminSku(): ?string;
 
     public function setProductAdminSku($productAdminSku): RmaRequestItemsInterface;
 
     public function getReasonForReturnId(): int;
 
     public function setReasonForReturnId($reasonForReturnId): RmaRequestItemsInterface;
+
+    public function getDeletedAt(): ?\DateTime;
+
+    public function setDeletedAt(\DateTime $deletedAt): RmaRequestItemsInterface;
 }

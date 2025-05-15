@@ -13,4 +13,8 @@ interface RmaReturnRequestTypeCodesInterface
     public function getDescription(): string;
 
     public function setDescription(string $description): RmaReturnRequestTypeCodesInterface;
+
+    public function getDeletedAt(): ?\DateTime;
+
+    public function setDeletedAt(\DateTime $deletedAt): RmaReturnRequestTypeCodesInterface;
 }

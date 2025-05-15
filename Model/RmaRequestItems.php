@@ -35,7 +35,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
         return $this;
     }
 
-    public function getProductName(): string
+    public function getProductName(): ?string
     {
         return (string) $this->getData('product_name');
     }
@@ -46,7 +46,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
         return $this;
     }
 
-    public function getQtyReturned(): float
+    public function getQtyReturned(): ?float
     {
         return (float) $this->getData('qty_returned');
     }
@@ -57,7 +57,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
         return $this;
     }
 
-    public function getMaterial(): string
+    public function getMaterial(): ?string
     {
         return (string) $this->getData('material');
     }
@@ -68,7 +68,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
         return $this;
     }
 
-    public function getBaseUnit(): string
+    public function getBaseUnit(): ?string
     {
         return (string) $this->getData('base_unit');
     }
@@ -90,7 +90,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
         return $this;
     }
 
-    public function getQtyAuthorized(): float
+    public function getQtyAuthorized(): ?float
     {
         return (float) $this->getData('qty_authorized');
     }
@@ -101,7 +101,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
         return $this;
     }
 
-    public function getQtyApproved(): float
+    public function getQtyApproved(): ?float
     {
         return (float) $this->getData('qty_approved');
     }
@@ -123,7 +123,7 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
         return $this;
     }
 
-    public function getProductAdminSku(): string
+    public function getProductAdminSku(): ?string
     {
         return (string) $this->getData('product_admin_sku');
     }
@@ -142,6 +142,18 @@ class RmaRequestItems extends AbstractModel implements RmaRequestItemsInterface
     public function setReasonForReturnId($reasonForReturnId): RmaRequestItemsInterface
     {
         $this->setData('reason_for_return_id', $reasonForReturnId);
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTime
+    {
+        $dateString = $this->getData('deleted_at');
+        return ($dateString) ? new \DateTime($dateString) : null;
+    }
+
+    public function setDeletedAt(\DateTime $deletedAt): RmaRequestItemsInterface
+    {
+        $this->setdata('deleted_at', $deletedAt->format('Y-m-d H:i:s'));
         return $this;
     }
 }

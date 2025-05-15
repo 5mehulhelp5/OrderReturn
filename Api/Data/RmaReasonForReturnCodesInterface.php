@@ -13,4 +13,8 @@ interface RmaReasonForReturnCodesInterface
     public function getDescription(): string;
 
     public function setDescription(string $description): RmaReasonForReturnCodesInterface;
+
+    public function getDeletedAt(): ?\DateTime;
+
+    public function setDeletedAt(\DateTime $deletedAt): RmaReasonForReturnCodesInterface;
 }

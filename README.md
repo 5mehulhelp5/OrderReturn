@@ -27,6 +27,7 @@ TODO:
 - Create a public Skuld_Base module with its functionalities
 - Improve module installation process
 - Evaluate viability for a TransportData class and Extension Attributes
+- Generate a Format Const and use it on model timestamps
 
 
 - URGENT TODO:
@@ -34,13 +35,14 @@ TODO:
   - Update CLI commands for testing timestamps and soft deletes
 
 
-
+    
 - Working on:
   - Create rma_request CRUD
 
 
 - RECENTLY ADDED
-  - db_schema_whitelist.json update
+  - validate model interfaces for nullable columns
+  - deteted_at logic on all models
 
 
 DONE:
