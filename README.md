@@ -39,12 +39,12 @@ TODO:
 
     
 - Working on:
-  - Create rma_request cli command
   - Update CLI commands for testing timestamps and soft deletes
 
 
 - RECENTLY ADDED
   - Create rma_request CRUD
+  - Create rma_request cli test command
 
 
 DONE:

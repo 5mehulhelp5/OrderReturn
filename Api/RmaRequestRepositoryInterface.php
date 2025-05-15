@@ -27,33 +27,33 @@ interface RmaRequestRepositoryInterface
 
     /**
      * @param \Skuld\OrderReturn\Api\Data\RmaRequestInterface | \Magento\Framework\Model\AbstractModel $request
-     * @return \Skuld\OrderReturn\Api\Data\RmaRequestInterface
+     * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(RmaRequestInterface $request): RmaRequestInterface;
+    public function delete(RmaRequestInterface $request): bool;
 
     /**
      * @param int $requestId
-     * @return \Skuld\OrderReturn\Api\Data\RmaRequestInterface
+     * @return bool
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
-    public function deleteById(int $requestId): RmaRequestInterface;
+    public function deleteById(int $requestId): bool;
 
     /**
      * @param \Skuld\OrderReturn\Api\Data\RmaRequestInterface | \Magento\Framework\Model\AbstractModel $request
-     * @return \Skuld\OrderReturn\Api\Data\RmaRequestInterface
+     * @return bool
      * @throws CouldNotDeleteException
      */
-    public function softDelete(RmaRequestInterface $request): RmaRequestInterface;
+    public function softDelete(RmaRequestInterface $request): bool;
 
     /**
      * @param int $requestId
-     * @return \Skuld\OrderReturn\Api\Data\RmaRequestInterface
+     * @return bool
      * @throws NoSuchEntityException
      * @throws CouldNotDeleteException
      */
-    public function softDeleteById(int $requestId): RmaRequestInterface;
+    public function softDeleteById(int $requestId): bool;
 
     /**
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria

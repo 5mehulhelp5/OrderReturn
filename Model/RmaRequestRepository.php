@@ -88,7 +88,7 @@ class RmaRequestRepository implements RmaRequestRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(RmaRequestInterface $request): RmaRequestInterface
+    public function delete(RmaRequestInterface $request): bool
     {
         if (!($request instanceof AbstractModel)) {
             throw new CouldNotDeleteException(__('The implementation of RmaRequest has changed'));
@@ -98,13 +98,13 @@ class RmaRequestRepository implements RmaRequestRepositoryInterface
         } catch (\Exception $e) {
             throw new CouldNotDeleteException(__($e->getMessage()));
         }
-        return $request;
+        return true;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteById(int $requestId): RmaRequestInterface
+    public function deleteById(int $requestId): bool
     {
         return $this->delete($this->getById($requestId));
     }
@@ -112,7 +112,7 @@ class RmaRequestRepository implements RmaRequestRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function softDelete(RmaRequestInterface $request): RmaRequestInterface
+    public function softDelete(RmaRequestInterface $request): bool
     {
         if (!($request instanceof AbstractModel)) {
             throw new CouldNotDeleteException(__('The implementation of RmaRequest has changed'));
@@ -124,13 +124,13 @@ class RmaRequestRepository implements RmaRequestRepositoryInterface
         } catch (\Exception $e) {
             throw new CouldNotDeleteException(__($e->getMessage()));
         }
-        return $request;
+        return true;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function softDeleteById(int $requestId): RmaRequestInterface
+    public function softDeleteById(int $requestId): bool
     {
         return $this->softDelete($this->getById($requestId));
     }

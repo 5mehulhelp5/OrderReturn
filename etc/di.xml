@@ -7,6 +7,7 @@
                 <item name="RmaReasonForReturnCodesTest" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaReasonForReturnCodesTest</item>
                 <item name="RmaReturnRequestTypeCodesTest" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaReturnRequestTypeCodesTest</item>
                 <item name="RmaRequestItemsTest" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaRequestItemsTest</item>
+                <item name="RmaRequestTest" xsi:type="object">Skuld\OrderReturn\Console\Command\RmaRequestTest</item>
             </argument>
         </arguments>
     </type>

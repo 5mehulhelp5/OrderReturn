@@ -54,6 +54,7 @@ class RmaRequest extends AbstractModel implements RmaRequestInterface
     public function setSalesOrganization($salesOrganization): RmaRequestInterface
     {
         $this->setData('sales_organization', $salesOrganization);
+        return $this;
     }
 
     public function getDistributionChannel(): int
