@@ -53,7 +53,7 @@ class RmaRequestTest extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getList($output);
+        $this->getElementById($output, 4);
         return 0;
     }
 
@@ -92,7 +92,7 @@ class RmaRequestTest extends Command
         $output->writeln('finish: '.__FUNCTION__);
     }
 
-    protected function getList($output) {
+    protected function getList($output, $includeDeleted) {
         $output->writeln('start: '.__FUNCTION__);
         $sortOrder = $this->sortOrderBuilder
             ->setField('id')
@@ -102,10 +102,32 @@ class RmaRequestTest extends Command
             ->addSortOrder($sortOrder)
             ->setCurrentPage(1)
             ->setPageSize(30);
-        $requestItems = $this->rmaRequestRepository->getList($this->searchCriteriaBuilder->create())->getItems();
+        if ($includeDeleted) {
+            $requestItems = $this->rmaRequestRepository->getListWithDeleted($this->searchCriteriaBuilder->create())->getItems();
+        } else {
+            $requestItems = $this->rmaRequestRepository->getList($this->searchCriteriaBuilder->create())->getItems();
+        }
         foreach ($requestItems as $requestItem) {
             $output->writeln(print_r($requestItem->getData(), true));
         }
         $output->writeln('finish: '.__FUNCTION__);
+    }
+
+    protected function softDeleteById($output, $id) {
+        $output->writeln('start: '.__FUNCTION__);
+        $deleteStatus = $this->rmaRequestRepository->softDeleteById($id);
+        $output->writeln($deleteStatus);
+        $output->writeln('finish: '.__FUNCTION__);
+    }
+
+    protected function restoreById($output, $id) {
+        $output->writeln('start: '.__FUNCTION__);
+        $deleteStatus = $this->rmaRequestRepository->restoreById($id);
+        $output->writeln($deleteStatus);
+        $output->writeln('finish: '.__FUNCTION__);
+    }
+
+    protected function getListWithSoftDeleted($output) {
+        $this->getList($output, true);
     }
 }

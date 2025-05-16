@@ -48,5 +48,7 @@ interface RmaRequestInterface
 
     public function getDeletedAt(): ?\DateTime;
 
-    public function setDeletedAt(\DateTime $deletedAt): RmaRequestInterface;
+    public function setDeletedAt(?\DateTime $deletedAt): RmaRequestInterface;
+
+    public function getIsDeleted(): bool;
 }

@@ -4,6 +4,7 @@ namespace Skuld\OrderReturn\Model;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -79,7 +80,7 @@ class RmaRequestRepository implements RmaRequestRepositoryInterface
         /** @var RmaRequest $request */
         $request = $this->rmaRequestFactory->create();
         $this->requestResourceModel->load($request, $requestId);
-        if (!$request->getId()) {
+        if (!$request->getId() || $request->getIsDeleted()) {
             throw new NoSuchEntityException(__('Request id not found'));
         }
         return $request;
@@ -112,6 +113,25 @@ class RmaRequestRepository implements RmaRequestRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    public function getList(SearchCriteriaInterface $searchCriteria, ?bool $includeDeleted = false): RmaRequestSearchResultsInterface
+    {
+        /** @var RmaRequestCollection $collection */
+        $collection = $this->rmaRequestCollectionFactory->create();
+        if ($includeDeleted) {
+            $collection->getSelect()->reset(Select::WHERE);
+        }
+        $this->collectionProcessor->process($searchCriteria, $collection);
+
+        $searchResults = $this->rmaRequestSearchResultsInterfaceFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+        return $searchResults;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function softDelete(RmaRequestInterface $request): bool
     {
         if (!($request instanceof AbstractModel)) {
@@ -138,17 +158,33 @@ class RmaRequestRepository implements RmaRequestRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): RmaRequestSearchResultsInterface
+    public function restore(RmaRequestInterface $request): bool
     {
-        /** @var RmaRequestCollection $collection */
-        $collection = $this->rmaRequestCollectionFactory->create();
+        if (!($request instanceof AbstractModel)) {
+            throw new CouldNotSaveException(__('The implementation of RmaRequest has changed'));
+        }
+        try {
+            $request->setDeletedAt(null);
+            $this->requestResourceModel->save($request);
+        } catch (\Exception $e) {
+            throw new CouldNotSaveException(__($e->getMessage()));
+        }
+        return true;
+    }
 
-        $this->collectionProcessor->process($searchCriteria, $collection);
+    /**
+     * {@inheritdoc}
+     */
+    public function restoreById(int $requestId): bool
+    {
+        return $this->restore($this->getById($requestId));
+    }
 
-        $searchResults = $this->rmaRequestSearchResultsInterfaceFactory->create();
-        $searchResults->setSearchCriteria($searchCriteria);
-        $searchResults->setItems($collection->getItems());
-        $searchResults->setTotalCount($collection->getSize());
-        return $searchResults;
+    /**
+     * {@inheritdoc}
+     */
+    public function getListWithDeleted(SearchCriteriaInterface $searchCriteria): RmaRequestSearchResultsInterface
+    {
+        return $this->getList($searchCriteria, true);
     }
 }

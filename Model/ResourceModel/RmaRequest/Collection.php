@@ -12,4 +12,9 @@ class Collection extends AbstractCollection
     {
         $this->_init(RmaRequest::class, RmaRequestResourceModel::class);
     }
+
+    protected function _initSelect() {
+        parent::_initSelect();
+        $this->addFieldToFilter('deleted_at', ['null' => true]);
+    }
 }

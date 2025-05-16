@@ -41,6 +41,13 @@ interface RmaRequestRepositoryInterface
     public function deleteById(int $requestId): bool;
 
     /**
+     * @param SearchCriteriaInterface $searchCriteria
+     * @param bool | null $includeDeleted
+     * @return RmaRequestSearchResultsInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria, ?bool $includeDeleted = false): RmaRequestSearchResultsInterface;
+
+    /**
      * @param \Skuld\OrderReturn\Api\Data\RmaRequestInterface | \Magento\Framework\Model\AbstractModel $request
      * @return bool
      * @throws CouldNotDeleteException
@@ -56,8 +63,24 @@ interface RmaRequestRepositoryInterface
     public function softDeleteById(int $requestId): bool;
 
     /**
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return Skuld\OrderReturn\Api\Data\RmaRequestSearchResultsInterface
+     * @param int $requestId
+     * @return bool
+     * @throws CouldNotSaveException
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): RmaRequestSearchResultsInterface;
+    public function restore(RmaRequestInterface $request): bool;
+
+    /**
+     * @param int $requestId
+     * @return bool
+     * @throws NoSuchEntityException
+     * @throws CouldNotSaveException
+     */
+    public function restoreById(int $requestId): bool;
+
+    /**
+     * @param SearchCriteriaInterface $searchCriteria
+     * @return RmaRequestSearchResultsInterface
+     */
+    public function getListWithDeleted(SearchCriteriaInterface $searchCriteria): RmaRequestSearchResultsInterface;
+
 }

@@ -129,9 +129,15 @@ class RmaRequest extends AbstractModel implements RmaRequestInterface
         return ($dateString) ? new \DateTime($dateString) : null;
     }
 
-    public function setDeletedAt(\DateTime $deletedAt): RmaRequestInterface
+    public function setDeletedAt(?\DateTime $deletedAt): RmaRequestInterface
     {
-        $this->setdata('deleted_at', $deletedAt->format('Y-m-d H:i:s'));
+        ($deletedAt) ? $deletedAt->format('Y-m-d H:i:s') : null;
+        $this->setdata('deleted_at', $deletedAt);
         return $this;
+    }
+
+    public function getIsDeleted(): bool
+    {
+        return (bool) $this->getData('deleted_at');
     }
 }

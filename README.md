@@ -4,7 +4,6 @@ A free Magento 2 module for handling order returns by customers.
 
 TODO:
 - Improve documentation
-- Implement soft deletes to "*_codes" models
 - Generate actions as entrypoint to business logic (some of this actions will not be added to the next list but, they'll be added to DONE list when they're ready)
   - Validate required fields
 - Generate admin panel ui table component for all models
@@ -31,20 +30,19 @@ TODO:
 
 
 - URGENT TODO:
-  - Update interfaces and repositories to add timestamps and soft-delete functionalities to all models
-  - Update CLI commands for testing timestamps and soft deletes
-  - Add isDeleted function to entity models
-  - getById by default will not show soft-deleted data
-
+  - Update interfaces and repositories for soft-delete functionalities to all models
+  - Add getIsDeleted() function to entity models
 
     
 - Working on:
-  - Update CLI commands for testing timestamps and soft deletes
+  - Implement soft deletes to "*_codes" models
 
 
 - RECENTLY ADDED
   - Create rma_request CRUD
   - Create rma_request cli test command
+  - Implement soft deletes for rma_request entity
+  - getById by default will not show soft-deleted data
 
 
 DONE:
