@@ -44,5 +44,43 @@ interface RmaReasonForReturnCodesRepositoryInterface
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Skuld\OrderReturn\Api\Data\RmaReasonForReturnCodesSearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): RmaReasonForReturnCodesSearchResultsInterface;
+    public function getList(SearchCriteriaInterface $searchCriteria, ?bool $includeDeleted = false): RmaReasonForReturnCodesSearchResultsInterface;
+
+
+    /**
+     * @param \Skuld\OrderReturn\Api\Data\RmaReasonForReturnCodesInterface | \Magento\Framework\Model\AbstractModel $reasonForReturnCode
+     * @return bool
+     * @throws CouldNotDeleteException
+     */
+    public function softDelete(RmaReasonForReturnCodesInterface $reasonForReturnCode): bool;
+
+
+    /**
+     * @param int $reasonForReturnCodeId
+     * @return bool
+     * @throws NoSuchEntityException
+     * @throws CouldNotDeleteException
+     */
+    public function softDeleteById(int $reasonForReturnCodeId): bool;
+
+    /**
+     * @param \Skuld\OrderReturn\Api\Data\RmaReasonForReturnCodesInterface $reasonForReturnCode
+     * @return bool
+     * @throws CouldNotSaveException
+     */
+    public function restore(RmaReasonForReturnCodesInterface $reasonForReturnCode): bool;
+
+    /**
+     * @param int $reasonForReturnCodeId
+     * @return bool
+     * @throws NoSuchEntityException
+     * @throws CouldNotSaveException
+     */
+    public function restoreById(int $reasonForReturnCodeId): bool;
+
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Skuld\OrderReturn\Api\Data\RmaReasonForReturnCodesSearchResultsInterface
+     */
+    public function getListWithDeleted(SearchCriteriaInterface $searchCriteria): RmaReasonForReturnCodesSearchResultsInterface;
 }

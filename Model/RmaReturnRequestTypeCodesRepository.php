@@ -4,6 +4,7 @@ namespace Skuld\OrderReturn\Model;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -77,7 +78,7 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
     {
         $returnRequestTypeCode = $this->rmaReturnRequestTypeCodesFactory->create();
         $this->rmaReturnRequestTypeCodesResourceModel->load($returnRequestTypeCode, $returnRequestTypeCodeId);
-        if (!$returnRequestTypeCode->getId()) {
+        if (!$returnRequestTypeCode->getId() || $returnRequestTypeCode->getIsDeleted()) {
             throw new NoSuchEntityException(__('Request type code not found.'));
         }
         return $returnRequestTypeCode;
@@ -89,7 +90,7 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
     public function delete(RmaReturnRequestTypeCodesInterface $rmaReturnRequestTypeCode): bool
     {
         if (!($rmaReturnRequestTypeCode instanceof AbstractModel)) {
-            throw new CouldNotSaveException(__('The implementation of ReturnRequestTypeCode has changed'));
+            throw new CouldNotDeleteException(__('The implementation of ReturnRequestTypeCode has changed'));
         }
 
         try {
@@ -112,10 +113,13 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): RmaReturnRequestTypeCodesSearchResultsInterface
+    public function getList(SearchCriteriaInterface $searchCriteria, ?bool $includeDeleted = false): RmaReturnRequestTypeCodesSearchResultsInterface
     {
         /** @var RmaReturnRequestTypeCodesCollection $collection */
         $collection = $this->rmaReturnRequestTypeCodesCollectionFactory->create();
+        if ($includeDeleted) {
+            $collection->getSelect()->reset(Select::WHERE);
+        }
 
         $this->collectionProcessor->process($searchCriteria, $collection);
 
@@ -125,5 +129,64 @@ class RmaReturnRequestTypeCodesRepository implements RmaReturnRequestTypeCodesRe
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
         return $searchResults;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function softDelete(RmaReturnRequestTypeCodesInterface $rmaReturnRequestTypeCode): bool
+    {
+        if (!($rmaReturnRequestTypeCode instanceof AbstractModel)) {
+            throw new CouldNotDeleteException(__('The implementation of ReturnRequestTypeCode has changed'));
+        }
+        try {
+            $time = (new \DateTime())->setTimezone(new \DateTimeZone('UTC'));
+            $rmaReturnRequestTypeCode->setDeletedAt($time);
+            $this->rmaReturnRequestTypeCodesResourceModel->save($rmaReturnRequestTypeCode);
+        } catch (\Exception $e) {
+            throw new CouldNotDeleteException(__($e->getMessage()));
+        }
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function softDeleteById(int $returnRequestTypeCodeId): bool
+    {
+        return $this->softDelete($this->getById($returnRequestTypeCodeId));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function restore(RmaReturnRequestTypeCodesInterface $rmaReturnRequestTypeCode): bool
+    {
+        if (!($rmaReturnRequestTypeCode instanceof AbstractModel)) {
+            throw new CouldNotSaveException(__('The implementation of ReturnRequestTypeCode has changed'));
+        }
+        try {
+            $rmaReturnRequestTypeCode->setDeletedAt(null);
+            $this->rmaReturnRequestTypeCodesResourceModel->save($rmaReturnRequestTypeCode);
+        } catch (\Exception $e) {
+            throw new CouldNotSaveException(__($e->getMessage()));
+        }
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function restoreById(int $returnRequestTypeCodeId): bool
+    {
+        return $this->restore($this->getById($returnRequestTypeCodeId));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getListWithDeleted(SearchCriteriaInterface $searchCriteria): RmaReturnRequestTypeCodesSearchResultsInterface
+    {
+        return $this->getList($searchCriteria, true);
     }
 }

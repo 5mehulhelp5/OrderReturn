@@ -17,4 +17,6 @@ interface RmaReasonForReturnCodesInterface
     public function getDeletedAt(): ?\DateTime;
 
     public function setDeletedAt(\DateTime $deletedAt): RmaReasonForReturnCodesInterface;
+
+    public function getIsDeleted(): bool;
 }

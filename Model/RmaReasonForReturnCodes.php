@@ -42,9 +42,15 @@ class RmaReasonForReturnCodes extends AbstractModel implements RmaReasonForRetur
         return ($dateString) ? new \DateTime($dateString) : null;
     }
 
-    public function setDeletedAt(\DateTime $deletedAt): RmaReasonForReturnCodesInterface
+    public function setDeletedAt(?\DateTime $deletedAt): RmaReasonForReturnCodesInterface
     {
-        $this->setdata('deleted_at', $deletedAt->format('Y-m-d H:i:s'));
+        ($deletedAt) ? $deletedAt->format('Y-m-d H:i:s') : null;
+        $this->setdata('deleted_at', $deletedAt);
         return $this;
+    }
+
+    public function getIsDeleted(): bool
+    {
+        return (bool) $this->getData('deleted_at');
     }
 }

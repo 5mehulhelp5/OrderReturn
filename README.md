@@ -35,10 +35,11 @@ TODO:
 
     
 - Working on:
-  - Implement soft deletes to "*_codes" models
+  - Testing soft-deletes functionalities for "*_codes" models
 
 
 - RECENTLY ADDED
+  - Implement soft deletes to "*_codes" models
   - Create rma_request CRUD
   - Create rma_request cli test command
   - Implement soft deletes for rma_request entity

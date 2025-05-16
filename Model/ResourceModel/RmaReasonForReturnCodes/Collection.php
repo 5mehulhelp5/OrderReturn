@@ -13,4 +13,9 @@ class Collection extends AbstractCollection
     {
         $this->_init(RmaReasonForReturnCodes::class, RmaReasonForReturnCodesResourceModel::class);
     }
+
+    protected function _initSelect() {
+        parent::_initSelect();
+        $this->addFieldToFilter('deleted_at', ['null' => true]);
+    }
 }

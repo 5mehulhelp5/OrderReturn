@@ -17,4 +17,6 @@ interface RmaReturnRequestTypeCodesInterface
     public function getDeletedAt(): ?\DateTime;
 
     public function setDeletedAt(\DateTime $deletedAt): RmaReturnRequestTypeCodesInterface;
+
+    public function getIsDeleted(): bool;
 }

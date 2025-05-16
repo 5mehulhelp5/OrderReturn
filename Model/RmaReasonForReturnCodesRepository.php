@@ -4,6 +4,7 @@ namespace Skuld\OrderReturn\Model;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\DB\Select;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -77,7 +78,7 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
     {
         $returnCode = $this->rmaReasonForReturnCodesFactory->create();
         $this->orderReturnCodesResource->load($returnCode, $reasonForReturnCodeId);
-        if (!$returnCode->getId()) {
+        if (!$returnCode->getId() || $returnCode->getIsDeleted()) {
             throw new NoSuchEntityException(__('Reason for return code not found.'));
         }
         return $returnCode;
@@ -112,10 +113,13 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): RmaReasonForReturnCodesSearchResultsInterface
+    public function getList(SearchCriteriaInterface $searchCriteria, ?bool $includeDeleted = false): RmaReasonForReturnCodesSearchResultsInterface
     {
         /** @var RmaReasonForReturnCodesCollection $collection */
         $collection = $this->rmaReasonForReturnCodesCollectionFactory->create();
+        if ($includeDeleted) {
+            $collection->getSelect()->reset(Select::WHERE);
+        }
 
         $this->collectionProcessor->process($searchCriteria, $collection);
 
@@ -125,5 +129,64 @@ class RmaReasonForReturnCodesRepository implements RmaReasonForReturnCodesReposi
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
         return $searchResults;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function softDelete(RmaReasonForReturnCodesInterface $reasonForReturnCode): bool
+    {
+        if (!($reasonForReturnCode instanceof AbstractModel)) {
+            throw new CouldNotDeleteException(__('The implementation of RmaReasonForReturnCodes has changed'));
+        }
+        try {
+            $time = (new \DateTime())->setTimezone(new \DateTimeZone('UTC'));
+            $reasonForReturnCode->setDeletedAt($time);
+            $this->orderReturnCodesResource->save($reasonForReturnCode);
+        } catch (\Exception $e) {
+            throw new CouldNotDeleteException(__($e->getMessage()));
+        }
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function softDeleteById(int $reasonForReturnCodeId): bool
+    {
+        return $this->softDelete($this->getById($reasonForReturnCodeId));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function restore(RmaReasonForReturnCodesInterface $reasonForReturnCode): bool
+    {
+        if (!($reasonForReturnCode instanceof AbstractModel)) {
+            throw new CouldNotSaveException(__('The implementation of RmaReasonForReturnCodes has changed'));
+        }
+        try {
+            $reasonForReturnCode->setDeletedAt(null);
+            $this->orderReturnCodesResource->save($reasonForReturnCode);
+        } catch (\Exception $e) {
+            throw new CouldNotSaveException(__($e->getMessage()));
+        }
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function restoreById(int $reasonForReturnCodeId): bool
+    {
+        return $this->restore($this->getById($reasonForReturnCodeId));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getListWithDeleted(SearchCriteriaInterface $searchCriteria): RmaReasonForReturnCodesSearchResultsInterface
+    {
+        return $this->getList($searchCriteria, true);
     }
 }
